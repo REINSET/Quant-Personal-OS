@@ -1,0 +1,3173 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="arasaka-dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARASAKA // BLACKWALL QUANTUM EXECUTIVE OS v2.0</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;0,800;1,400&family=Noto+Sans+JP:wght@700;900&family=Noto+Sans+KR:wght@700;900&family=Noto+Sans+TC:wght@700;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       1. 4 EXPLICIT THEME MODES (ARASAKA DARK/LIGHT & BLACKWALL DARK/LIGHT)
+       ========================================================================== */
+    html[data-theme="arasaka-dark"] {
+      --bg-base: #07080a;
+      --bg-surface: #0e1015;
+      --bg-card: #13161d;
+      --bg-card-hover: #191d26;
+      --bg-input: #090b0e;
+      --brand-primary: #e60012;
+      --brand-secondary: #d4af37;
+      --brand-accent: #ff2a3b;
+      --brand-glow: rgba(230, 0, 18, 0.35);
+      --border-main: rgba(230, 0, 18, 0.42);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --text-main: #f3f5f8;
+      --text-secondary: #b0b8c4;
+      --text-muted: #6e7785;
+      --status-ok: #00e676;
+      --status-warn: #f59e0b;
+      --grid-line: rgba(230, 0, 18, 0.032);
+      --watermark-opacity: 0.055;
+      --shadow-panel: 0 10px 30px -10px rgba(0, 0, 0, 0.75);
+    }
+
+    html[data-theme="arasaka-light"] {
+      --bg-base: #f4f5f7;
+      --bg-surface: #ffffff;
+      --bg-card: #ffffff;
+      --bg-card-hover: #fff5f5;
+      --bg-input: #f8f9fa;
+      --brand-primary: #e60012;
+      --brand-secondary: #9e7b1c;
+      --brand-accent: #b8000e;
+      --brand-glow: rgba(230, 0, 18, 0.15);
+      --border-main: rgba(230, 0, 18, 0.55);
+      --border-subtle: rgba(230, 0, 18, 0.16);
+      --text-main: #111318;
+      --text-secondary: #374151;
+      --text-muted: #6b7280;
+      --status-ok: #059669;
+      --status-warn: #d97706;
+      --grid-line: rgba(230, 0, 18, 0.045);
+      --watermark-opacity: 0.05;
+      --shadow-panel: 0 4px 20px -2px rgba(230, 0, 18, 0.09);
+    }
+
+    html[data-theme="blackwall-dark"] {
+      --bg-base: #04070b;
+      --bg-surface: #08101a;
+      --bg-card: #0c1726;
+      --bg-card-hover: #112236;
+      --bg-input: #050b12;
+      --brand-primary: #00f0ff;
+      --brand-secondary: #ff003c;
+      --brand-accent: #00b8ff;
+      --brand-glow: rgba(0, 240, 255, 0.35);
+      --border-main: rgba(0, 240, 255, 0.42);
+      --border-subtle: rgba(0, 240, 255, 0.12);
+      --text-main: #e6f7ff;
+      --text-secondary: #94b8d0;
+      --text-muted: #56768f;
+      --status-ok: #00ffaa;
+      --status-warn: #ffaa00;
+      --grid-line: rgba(0, 240, 255, 0.035);
+      --watermark-opacity: 0.06;
+      --shadow-panel: 0 10px 30px -10px rgba(0, 20, 40, 0.85);
+    }
+
+    html[data-theme="blackwall-light"] {
+      --bg-base: #f2f7fa;
+      --bg-surface: #ffffff;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f0faff;
+      --bg-input: #f5f9fc;
+      --brand-primary: #006688;
+      --brand-secondary: #d90030;
+      --brand-accent: #004d66;
+      --brand-glow: rgba(0, 102, 136, 0.18);
+      --border-main: rgba(0, 102, 136, 0.48);
+      --border-subtle: rgba(0, 102, 136, 0.15);
+      --text-main: #0a121a;
+      --text-secondary: #2c4257;
+      --text-muted: #5c768d;
+      --status-ok: #047857;
+      --status-warn: #b45309;
+      --grid-line: rgba(0, 102, 136, 0.045);
+      --watermark-opacity: 0.05;
+      --shadow-panel: 0 4px 20px -2px rgba(0, 102, 136, 0.09);
+    }
+
+    /* ==========================================================================
+       2. TYPOGRAPHY & ERGONOMIC HIERARCHY
+       ========================================================================== */
+    @font-face {
+      font-family: 'Aptos Narrow';
+      src: local('Aptos Narrow'), local('Segoe UI Semibold'), local('Arial Narrow'), sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 12px;
+      line-height: 1.5;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: 
+        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+      background-size: 32px 32px;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .font-aptos {
+      font-family: 'Aptos Narrow', 'Inter', sans-serif;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .font-mono-tech {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ==========================================================================
+       3. TACTICAL PANELS, CHAMFERED CORNERS & SLIDERS
+       ========================================================================== */
+    .corp-panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-top: 2px solid var(--brand-primary);
+      box-shadow: var(--shadow-panel);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+
+    .corp-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      position: relative;
+      transition: all 0.18s ease;
+    }
+
+    .corp-card:hover {
+      border-color: var(--border-main);
+      background: var(--bg-card-hover);
+    }
+
+    .clip-tag {
+      clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 0 100%);
+    }
+
+    .script-watermark {
+      position: absolute;
+      right: 12px;
+      bottom: -8px;
+      font-size: 4.2rem;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--brand-primary);
+      opacity: var(--watermark-opacity);
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+      white-space: nowrap;
+      font-family: 'Noto Sans JP', 'Noto Sans TC', 'Noto Sans KR', sans-serif;
+    }
+
+    input[type="range"] {
+      accent-color: var(--brand-primary);
+      height: 5px;
+      background: var(--bg-input);
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-base);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-main);
+      border-radius: 2px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--brand-primary);
+    }
+  </style>
+</head>
+<body class="flex flex-col antialiased selection:bg-[var(--brand-primary)] selection:text-white">
+
+  <!-- ==========================================================================
+       TOP HACKING / QUANT TELEMETRY TICKER
+       ========================================================================== -->
+  <div class="bg-[var(--bg-input)] border-b border-[var(--border-subtle)] px-4 py-1 flex items-center justify-between text-[10px] font-mono-tech overflow-hidden">
+    <div class="flex items-center gap-4 overflow-x-auto whitespace-nowrap">
+      <span class="text-[var(--brand-primary)] font-bold flex items-center gap-1.5">
+        <span class="w-1.5 h-1.5 rounded-full bg-[var(--brand-primary)] animate-ping"></span>
+        <span id="bootTickerText">// INITIALISING_QUANT_ALM_CORE............... [OK]</span>
+      </span>
+      <span class="text-[var(--text-muted)]">|</span>
+      <span class="text-[var(--text-secondary)]">// ETTJ_SVENSSON_DUCKDB............... <strong class="text-[var(--status-ok)]">[14.8M rows/s]</strong></span>
+      <span class="text-[var(--text-muted)] hidden md:inline">|</span>
+      <span class="text-[var(--text-secondary)] hidden md:inline">// IRRBB_DV01_EVE_NII............... <strong class="text-[var(--brand-secondary)]">[CALIBRATED]</strong></span>
+      <span class="text-[var(--text-muted)] hidden xl:inline">|</span>
+      <span class="text-[var(--text-secondary)] hidden xl:inline">// ANPEC_IMPA_AXIOMS............... <strong class="text-[var(--brand-primary)]">[ENGAGED]</strong></span>
+    </div>
+
+    <div class="flex items-center gap-3 shrink-0 ml-4">
+      <button onclick="cycleWatermarkScript()" class="text-[var(--text-muted)] hover:text-[var(--brand-primary)] transition font-bold" title="Cycle Background Script">
+        <span id="scriptCycleIndicator">[SCRIPT: AUTO]</span>
+      </button>
+      <span id="liveClock" class="text-[var(--brand-primary)] font-bold">00:00:00</span>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MAIN COMMAND HEADER (THEMES, LANGUAGES, INSIGNIA & POMODORO)
+       ========================================================================== -->
+  <header class="bg-[var(--bg-surface)] border-b border-[var(--border-main)] px-4 py-3 sticky top-0 z-40 shadow-md">
+    <div class="max-w-[1720px] mx-auto flex flex-wrap items-center justify-between gap-3">
+      
+      <!-- Left: Corporate / FIA Brand Identity -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded bg-[var(--bg-card)] border border-[var(--brand-primary)] flex items-center justify-center text-[var(--brand-primary)] shadow-inner shrink-0">
+          <svg id="brandSvgLogo" viewBox="0 0 100 100" class="w-6 h-6 fill-current">
+            <circle cx="50" cy="50" r="12" />
+            <path d="M50 8 L63 36 L37 36 Z" />
+            <path d="M86 72 L62 56 L74 34 Z" />
+            <path d="M14 72 L26 34 L38 56 Z" />
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 id="uiMainTitle" class="font-aptos text-sm md:text-base tracking-wider text-[var(--text-main)]">
+              ARASAKA // QUANTUM EXECUTIVE OS
+            </h1>
+            <span id="uiClearanceBadge" class="clip-tag bg-[var(--brand-primary)] text-white px-2 py-0.5 text-[9px] font-mono-tech font-bold">
+              LVL-05 QUANT
+            </span>
+          </div>
+          <p id="uiSubtitle" class="text-[11px] text-[var(--text-muted)] font-mono-tech">
+            ALM Desk • IMPA/ANPEC • DuckDB • 繁體注音 &amp; 한글
+          </p>
+        </div>
+      </div>
+
+      <!-- Center: 4 Explicit Theme Switcher Buttons + 4 Language Buttons -->
+      <div class="flex flex-wrap items-center gap-2.5">
+        
+        <!-- 4 THEME MODES -->
+        <div class="flex items-center bg-[var(--bg-input)] p-1 rounded border border-[var(--border-subtle)] gap-1">
+          <button onclick="setSystemTheme('arasaka-dark')" id="theme-arasaka-dark" class="px-2 py-1 rounded text-[10px] font-mono-tech font-bold transition flex items-center gap-1">
+            <span class="w-2 h-2 rounded-full bg-[#e60012] border border-white/40"></span>
+            <span>ARASAKA DARK</span>
+          </button>
+          <button onclick="setSystemTheme('arasaka-light')" id="theme-arasaka-light" class="px-2 py-1 rounded text-[10px] font-mono-tech font-bold transition flex items-center gap-1">
+            <span class="w-2 h-2 rounded-full bg-white border-2 border-[#e60012]"></span>
+            <span>ARASAKA LIGHT</span>
+          </button>
+          <button onclick="setSystemTheme('blackwall-dark')" id="theme-blackwall-dark" class="px-2 py-1 rounded text-[10px] font-mono-tech font-bold transition flex items-center gap-1">
+            <span class="w-2 h-2 rounded-full bg-[#00f0ff]"></span>
+            <span>BLACKWALL DARK</span>
+          </button>
+          <button onclick="setSystemTheme('blackwall-light')" id="theme-blackwall-light" class="px-2 py-1 rounded text-[10px] font-mono-tech font-bold transition flex items-center gap-1">
+            <span class="w-2 h-2 rounded-full bg-[#e0f7ff] border-2 border-[#006688]"></span>
+            <span>BLACKWALL LIGHT</span>
+          </button>
+        </div>
+
+        <!-- 4 COMPLETE UI LANGUAGES -->
+        <div class="flex items-center bg-[var(--bg-input)] p-1 rounded border border-[var(--border-subtle)] gap-1 font-mono-tech text-[10px]">
+          <button onclick="setSystemLanguage('pt')" id="lang-pt" class="px-2.5 py-1 rounded font-bold transition">PT-BR</button>
+          <button onclick="setSystemLanguage('en')" id="lang-en" class="px-2.5 py-1 rounded font-bold transition">EN-GB</button>
+          <button onclick="setSystemLanguage('zh')" id="lang-zh" class="px-2.5 py-1 rounded font-bold transition">繁體/ㄅ</button>
+          <button onclick="setSystemLanguage('ko')" id="lang-ko" class="px-2.5 py-1 rounded font-bold transition">한국어</button>
+        </div>
+
+      </div>
+
+      <!-- Right: Integrated 15-Min Atomic Timer & Audio Synth -->
+      <div class="flex items-center gap-2 bg-[var(--bg-card)] border border-[var(--border-main)] px-3 py-1.5 rounded">
+        <i class="ph-bold ph-timer text-base text-[var(--brand-primary)]"></i>
+        <div class="font-mono-tech">
+          <div class="text-[9px] text-[var(--text-muted)] uppercase leading-none" id="timerLabelActive" data-i18n="timer_label">PROTOCOLO 15M</div>
+          <div class="text-sm font-extrabold text-[var(--text-main)] leading-tight" id="headerTimerDisplay">15:00</div>
+        </div>
+        <button onclick="toggleAtomicTimer()" id="btnTimerToggle" class="bg-[var(--brand-primary)] text-white px-2.5 py-1 rounded text-[10px] font-mono-tech font-bold hover:opacity-90 transition">
+          START
+        </button>
+        <button onclick="resetAtomicTimer()" class="text-[var(--text-muted)] hover:text-[var(--text-main)] px-1 text-xs" title="Reset 15m">
+          <i class="ph-bold ph-arrow-counter-clockwise"></i>
+        </button>
+        <button onclick="toggleAudioSfx()" id="btnSfxToggle" class="text-[var(--brand-primary)] hover:opacity-80 pl-1 border-l border-[var(--border-subtle)]" title="Sound Effects">
+          <i class="ph-bold ph-speaker-high" id="sfxIcon"></i>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       PRIMARY VIEW NAVIGATION TABS
+       ========================================================================== -->
+  <nav class="bg-[var(--bg-surface)] border-b border-[var(--border-subtle)] px-4">
+    <div class="max-w-[1720px] mx-auto flex items-center gap-2 overflow-x-auto py-2">
+      <button onclick="switchMainTab('overview')" id="tab-overview" class="px-3.5 py-1.5 rounded text-xs font-aptos flex items-center gap-2 transition">
+        <i class="ph-bold ph-squares-four"></i>
+        <span data-i18n="nav_overview">01 // VISÃO GERAL, FOTOS, ASCII &amp; SIMULADORES</span>
+      </button>
+      <button onclick="switchMainTab('econlab')" id="tab-econlab" class="px-3.5 py-1.5 rounded text-xs font-aptos flex items-center gap-2 transition">
+        <i class="ph-bold ph-chart-polar"></i>
+        <span data-i18n="nav_econlab">02 // LABORATÓRIO MACRO &amp; QUANT ALM (4 MOTORES)</span>
+      </button>
+      <button onclick="switchMainTab('roadmaps')" id="tab-roadmaps" class="px-3.5 py-1.5 rounded text-xs font-aptos flex items-center gap-2 transition">
+        <i class="ph-bold ph-compass"></i>
+        <span data-i18n="nav_roadmaps">03 // JORNADAS &amp; COMO ATINGIR (PHD / QUANT / IDIOMAS)</span>
+      </button>
+      <button onclick="switchMainTab('tasks')" id="tab-tasks" class="px-3.5 py-1.5 rounded text-xs font-aptos flex items-center gap-2 transition">
+        <i class="ph-bold ph-check-square-offset"></i>
+        <span data-i18n="nav_tasks">04 // CENTRAL DE TAREFAS &amp; PRIORIDADES</span>
+      </button>
+      <button onclick="switchMainTab('emergency')" id="tab-emergency" class="px-3.5 py-1.5 rounded text-xs font-aptos flex items-center gap-2 transition ml-auto text-[var(--brand-secondary)] border border-[var(--brand-secondary)]/40">
+        <i class="ph-bold ph-lightning"></i>
+        <span data-i18n="nav_emergency">05 // ANTI-PARALISIA (REGRA 2%)</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ==========================================================================
+       MAIN CONTENT CONTAINER
+       ========================================================================== -->
+  <main class="flex-1 max-w-[1720px] w-full mx-auto p-4 md:p-6 space-y-6">
+
+    <!-- ========================================================================
+         TAB 01: EXECUTIVE OVERVIEW, DIRECT PHOTO/ASCII DECK & LIVE MACRO LAB
+         ======================================================================== -->
+    <div id="section-overview" class="space-y-6">
+      
+      <!-- ROW 1: 4 KPI TELEMETRY CARDS -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <!-- KPI 1 -->
+        <div class="corp-panel p-4 rounded-sm flex flex-col justify-between">
+          <div class="script-watermark" data-watermark="kanji">荒坂</div>
+          <div class="relative z-10">
+            <div class="flex items-center justify-between">
+              <span class="font-aptos text-xs text-[var(--text-muted)]" data-i18n="kpi_completion">ÍNDICE DE EXECUÇÃO GERAL</span>
+              <i class="ph-bold ph-chart-line-up text-[var(--brand-primary)] text-lg"></i>
+            </div>
+            <div class="text-2xl font-mono-tech font-extrabold text-[var(--text-main)] mt-1.5" id="kpiTotalPercent">0%</div>
+            <div class="w-full bg-[var(--bg-input)] h-2 rounded-full overflow-hidden mt-2 border border-[var(--border-subtle)]">
+              <div id="kpiProgressBar" class="bg-[var(--brand-primary)] h-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+          </div>
+          <div class="relative z-10 flex items-center justify-between text-[11px] font-mono-tech text-[var(--text-muted)] mt-3 pt-2 border-t border-[var(--border-subtle)]">
+            <span id="kpiCompletedText">0</span>
+            <span id="kpiPendingText">0</span>
+          </div>
+        </div>
+
+        <!-- KPI 2 -->
+        <div class="corp-panel p-4 rounded-sm flex flex-col justify-between">
+          <div class="script-watermark" data-watermark="hanzi">優先</div>
+          <div class="relative z-10">
+            <div class="flex items-center justify-between">
+              <span class="font-aptos text-xs text-[var(--text-muted)]" data-i18n="kpi_critical">PRIORIDADE CRÍTICA (P0 / H0)</span>
+              <i class="ph-bold ph-warning-diamond text-[var(--brand-secondary)] text-lg"></i>
+            </div>
+            <div class="text-2xl font-mono-tech font-extrabold text-[var(--brand-primary)] mt-1.5" id="kpiCriticalCount">0</div>
+            <p class="text-[11px] text-[var(--text-secondary)] mt-1" data-i18n="kpi_critical_sub">
+              Blindagem Santander, Artigo ALM &amp; Burocracias Zero-Atrito
+            </p>
+          </div>
+          <div class="relative z-10 mt-3 pt-2 border-t border-[var(--border-subtle)] flex items-center justify-between text-[10px] font-mono-tech">
+            <span class="text-[var(--status-ok)]" data-i18n="status_online">● SISTEMA ESTÁVEL</span>
+            <button onclick="switchMainTab('tasks')" class="text-[var(--brand-primary)] hover:underline font-bold" data-i18n="btn_view_queue">VER FILA &rarr;</button>
+          </div>
+        </div>
+
+        <!-- KPI 3 -->
+        <div class="corp-panel p-4 rounded-sm flex flex-col justify-between">
+          <div class="script-watermark" data-watermark="kanji">数理</div>
+          <div class="relative z-10">
+            <div class="flex items-center justify-between">
+              <span class="font-aptos text-xs text-[var(--text-muted)]" data-i18n="kpi_quant">MATEMÁTICA IMPA &amp; QUANT</span>
+              <i class="ph-bold ph-function text-[var(--brand-primary)] text-lg"></i>
+            </div>
+            <div class="text-base font-mono-tech font-bold text-[var(--text-main)] mt-1.5" data-i18n="kpi_quant_path">
+              Axiomas &rarr; Análise Real &rarr; ETTJ
+            </div>
+            <div class="text-[11px] font-mono-tech text-[var(--brand-secondary)] mt-1">
+              Python • DuckDB • Polars • ANPEC / IMPA
+            </div>
+          </div>
+          <div class="relative z-10 mt-3 pt-2 border-t border-[var(--border-subtle)] flex items-center justify-between text-[10px] font-mono-tech">
+            <span id="kpiMathSteps">0/7</span>
+            <button onclick="switchMainTab('roadmaps')" class="text-[var(--brand-primary)] hover:underline font-bold" data-i18n="btn_protocol">PROTOCOLO &rarr;</button>
+          </div>
+        </div>
+
+        <!-- KPI 4 -->
+        <div class="corp-panel p-4 rounded-sm flex flex-col justify-between">
+          <div class="script-watermark" data-watermark="hangul">언어</div>
+          <div class="relative z-10">
+            <div class="flex items-center justify-between">
+              <span class="font-aptos text-xs text-[var(--text-muted)]" data-i18n="kpi_lang">IDIOMAS &amp; PROSA MODERNA</span>
+              <i class="ph-bold ph-translate text-[var(--status-ok)] text-lg"></i>
+            </div>
+            <div class="text-base font-mono-tech font-bold text-[var(--text-main)] mt-1.5">
+              繁體中文 (ㄅㄆㄇㄈ) • 한국어 (한글)
+            </div>
+            <p class="text-[11px] text-[var(--text-secondary)] mt-1" data-i18n="kpi_lang_sub">
+              Blocos diários de 15m + Othon M. Garcia + Dicção Mecânica
+            </p>
+          </div>
+          <div class="relative z-10 mt-3 pt-2 border-t border-[var(--border-subtle)] flex items-center justify-between text-[10px] font-mono-tech">
+            <span class="text-[var(--status-ok)]" data-i18n="lang_paused_note">DE/FR/JP: PAUSADOS</span>
+            <button onclick="startQuickSession('Hanzi + Zhuyin / Hangul 15m')" class="text-[var(--brand-primary)] hover:underline font-bold" data-i18n="btn_train_15m">TREINAR 15M &rarr;</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ======================================================================
+           ROW 2 (FIRST PAGE VISUAL DECK): DIRECT PHOTO UPLOAD + LIVE ASCII + MULTI-ENGINE SIMULATOR
+           ====================================================================== -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        
+        <!-- COL 1 (4 Cols): DIRECT FIRST-PAGE PHOTO & VISUAL BANNER UPLOADER -->
+        <div class="lg:col-span-4 corp-panel p-4 rounded-sm flex flex-col justify-between space-y-3">
+          <div class="script-watermark" data-watermark="hangul">시각자료</div>
+          
+          <div class="relative z-10 flex items-center justify-between border-b border-[var(--border-subtle)] pb-2">
+            <div>
+              <h3 class="font-aptos text-xs text-[var(--brand-primary)] flex items-center gap-1.5">
+                <i class="ph-bold ph-camera"></i>
+                <span data-i18n="p1_photo_title">// MURAL VISUAL &amp; FOTOS (PÁGINA 1)</span>
+              </h3>
+              <p class="text-[10px] text-[var(--text-muted)]" data-i18n="p1_photo_sub">Suba suas fotos, curvas ou inspirações diretamente aqui</p>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <label class="cursor-pointer bg-[var(--brand-primary)] text-white px-2.5 py-1 rounded text-[10px] font-mono-tech font-bold hover:opacity-90 transition flex items-center gap-1">
+                <i class="ph-bold ph-upload-simple"></i>
+                <span data-i18n="btn_upload_photo">SUBIR FOTO</span>
+                <input type="file" accept="image/*" onchange="handleLocalPhotoUpload(event)" class="hidden">
+              </label>
+              <button onclick="togglePage1UrlBox()" class="px-2 py-1 text-[10px] font-mono-tech border border-[var(--border-main)] bg-[var(--bg-card)] rounded hover:bg-[var(--brand-primary)] hover:text-white transition" title="Add via URL">
+                +URL
+              </button>
+            </div>
+          </div>
+
+          <!-- Hidden Quick URL input right on Page 1 -->
+          <div id="p1UrlDrawer" class="hidden relative z-10 bg-[var(--bg-input)] p-2 rounded border border-[var(--border-main)] space-y-1.5 font-mono-tech text-[10px]">
+            <input type="text" id="p1ImgUrlInput" placeholder="https://..." class="w-full bg-[var(--bg-card)] border border-[var(--border-subtle)] px-2 py-1 rounded text-[var(--text-main)]">
+            <div class="flex gap-1.5">
+              <input type="text" id="p1ImgCaptionInput" placeholder="Legenda / Caption..." class="flex-1 bg-[var(--bg-card)] border border-[var(--border-subtle)] px-2 py-1 rounded text-[var(--text-main)]">
+              <button onclick="addPhotoFromPage1Url()" class="bg-[var(--brand-primary)] text-white px-2.5 py-1 rounded font-bold">OK</button>
+            </div>
+          </div>
+
+          <!-- Featured Active Photo Display on Page 1 -->
+          <div class="relative z-10 group rounded overflow-hidden border border-[var(--border-subtle)] bg-[var(--bg-input)] h-48 flex items-center justify-center">
+            <img id="p1HeroImage" src="" alt="Featured Visual" onerror="this.src='https://placehold.co/600x400/111318/e60012?text=ARASAKA+VISUAL+SLOT'" class="w-full h-full object-cover transition duration-300">
+            <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-2.5 flex items-center justify-between">
+              <span id="p1HeroCaption" class="font-mono-tech text-[10.5px] text-white font-semibold truncate"></span>
+              <div class="flex items-center gap-1 shrink-0">
+                <button onclick="cycleHeroPhoto(-1)" class="bg-black/70 hover:bg-[var(--brand-primary)] text-white w-6 h-6 rounded flex items-center justify-center text-xs">‹</button>
+                <button onclick="cycleHeroPhoto(1)" class="bg-black/70 hover:bg-[var(--brand-primary)] text-white w-6 h-6 rounded flex items-center justify-center text-xs">›</button>
+                <button onclick="deleteActiveHeroPhoto()" class="bg-black/70 hover:bg-red-600 text-white w-6 h-6 rounded flex items-center justify-center text-xs" title="Delete Photo">✕</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Thumbnail Strip right on Page 1 -->
+          <div id="p1PhotoThumbStrip" class="relative z-10 flex items-center gap-2 overflow-x-auto py-1"></div>
+        </div>
+
+        <!-- COL 2 (4 Cols): DIRECT FIRST-PAGE LIVE EDITABLE ASCII ART TERMINAL -->
+        <div class="lg:col-span-4 corp-panel p-4 rounded-sm flex flex-col justify-between space-y-3">
+          <div class="script-watermark" data-watermark="kanji">電脳芸術</div>
+
+          <div class="relative z-10 flex items-center justify-between border-b border-[var(--border-subtle)] pb-2">
+            <div>
+              <h3 class="font-aptos text-xs text-[var(--brand-primary)] flex items-center gap-1.5">
+                <i class="ph-bold ph-terminal-window"></i>
+                <span data-i18n="p1_ascii_title">// TERMINAL ASCII INTERATIVO (PÁGINA 1)</span>
+              </h3>
+              <p class="text-[10px] text-[var(--text-muted)]" data-i18n="p1_ascii_sub">Escolha um preset ou cole sua arte ASCII diretamente aqui</p>
+            </div>
+            <div class="flex items-center gap-1">
+              <select id="asciiPresetSelect" onchange="loadAsciiPreset(this.value)" class="bg-[var(--bg-input)] border border-[var(--border-subtle)] text-[10px] font-mono-tech px-2 py-1 rounded text-[var(--text-main)]">
+                <option value="arasaka">Arasaka Corp</option>
+                <option value="songbird">Songbird Blackwall</option>
+                <option value="quant">ETTJ &amp; Itô Formula</option>
+                <option value="anime">Cyber Operator</option>
+                <option value="custom">Custom</option>
+              </select>
+              <button onclick="togglePage1AsciiEditor()" id="btnToggleAsciiEdit" class="px-2.5 py-1 text-[10px] font-mono-tech font-bold border border-[var(--brand-primary)] text-[var(--brand-primary)] rounded hover:bg-[var(--brand-primary)] hover:text-white transition" data-i18n="btn_edit_ascii">
+                EDITAR
+              </button>
+            </div>
+          </div>
+
+          <!-- Display Mode -->
+          <pre id="overviewAsciiDisplay" class="relative z-10 font-mono-tech text-[9.5px] leading-[1.22] text-[var(--brand-primary)] bg-[var(--bg-input)] border border-[var(--border-subtle)] p-3 rounded overflow-x-auto select-all flex-1 flex items-center justify-center min-h-[210px]"></pre>
+
+          <!-- Direct Live Editor Mode on Page 1 (Toggled) -->
+          <div id="p1AsciiEditContainer" class="hidden relative z-10 flex-1 flex flex-col space-y-2">
+            <textarea id="asciiEditorTextarea" rows="9" class="w-full flex-1 font-mono-tech text-[9.5px] leading-[1.2] bg-[var(--bg-input)] text-[var(--brand-primary)] border border-[var(--brand-primary)] rounded p-2.5 outline-none" spellcheck="false"></textarea>
+            <div class="flex justify-end gap-2">
+              <button onclick="togglePage1AsciiEditor()" class="px-2.5 py-1 text-[10px] font-mono-tech border border-[var(--border-subtle)] rounded text-[var(--text-muted)]" data-i18n="btn_cancel">CANCELAR</button>
+              <button onclick="saveCustomAscii()" class="px-3 py-1 text-[10px] font-mono-tech font-bold bg-[var(--brand-primary)] text-white rounded" data-i18n="btn_save_ascii">SALVAR ASCII</button>
+            </div>
+          </div>
+
+          <div class="relative z-10 flex items-center justify-between text-[10px] font-mono-tech text-[var(--text-muted)] pt-1 border-t border-[var(--border-subtle)]">
+            <span data-i18n="ascii_status_saved">● PERSISTÊNCIA LOCAL ATIVA</span>
+            <span class="text-[var(--brand-secondary)]">UTF-8 // MONOSPACE</span>
+          </div>
+        </div>
+
+        <!-- COL 3 (4 Cols): PAGE 1 QUICK MULTI-ENGINE MACRO & QUANT TELEMETRY -->
+        <div class="lg:col-span-4 corp-panel p-4 rounded-sm flex flex-col justify-between space-y-3">
+          <div class="script-watermark" data-watermark="hanzi">殖利率</div>
+
+          <div class="relative z-10 flex items-center justify-between border-b border-[var(--border-subtle)] pb-2">
+            <div>
+              <h3 class="font-aptos text-xs text-[var(--brand-primary)]" data-i18n="chart_title">
+                MOTOR QUANT // ETTJ SVENSSON &amp; IRRBB ALM
+              </h3>
+              <p class="text-[10px] font-mono-tech text-[var(--text-muted)]">
+                r(τ) = β₀ + β₁[(1-e^(-τ/λ₁))/(τ/λ₁)] + β₂[...]
+              </p>
+            </div>
+            <div class="flex items-center gap-1">
+              <button onclick="randomizeYieldCurve()" class="px-2 py-1 text-[10px] font-mono-tech border border-[var(--border-main)] bg-[var(--bg-card)] hover:bg-[var(--brand-primary)] hover:text-white rounded transition" data-i18n="btn_shock_curve">
+                CHOQUE Δr
+              </button>
+              <button onclick="switchMainTab('econlab')" class="px-2 py-1 text-[10px] font-mono-tech bg-[var(--brand-primary)] text-white rounded font-bold" data-i18n="btn_open_4_engines">
+                4 MOTORES &rarr;
+              </button>
+            </div>
+          </div>
+
+          <div class="relative z-10 flex-1 flex items-center justify-center bg-[var(--bg-input)] border border-[var(--border-subtle)] rounded p-2">
+            <canvas id="yieldCurveCanvas" width="460" height="165" class="w-full h-[165px]"></canvas>
+          </div>
+
+          <!-- Quick Page 1 Sliders for Instant Curve Manipulation -->
+          <div class="relative z-10 grid grid-cols-2 gap-2 bg-[var(--bg-card)] p-2 rounded border border-[var(--border-subtle)] font-mono-tech text-[10px]">
+            <div>
+              <div class="flex justify-between">
+                <span class="text-[var(--text-muted)]">β₀ (Level Selic/Longo):</span>
+                <span id="p1Beta0Val" class="text-[var(--brand-primary)] font-bold">11.8%</span>
+              </div>
+              <input type="range" min="7" max="16" step="0.1" value="11.8" oninput="updateQuickCurveParam('b0', this.value)" class="w-full mt-1">
+            </div>
+            <div>
+              <div class="flex justify-between">
+                <span class="text-[var(--text-muted)]">β₁ (Slope Curto-Longo):</span>
+                <span id="p1Beta1Val" class="text-[var(--brand-secondary)] font-bold">-1.6%</span>
+              </div>
+              <input type="range" min="-5" max="4" step="0.1" value="-1.6" oninput="updateQuickCurveParam('b1', this.value)" class="w-full mt-1">
+            </div>
+          </div>
+
+          <div class="relative z-10 grid grid-cols-3 gap-2 text-[10px] font-mono-tech">
+            <div class="bg-[var(--bg-card)] px-2 py-1.5 rounded border border-[var(--border-subtle)]">
+              <span class="text-[var(--text-muted)] block">DV01 ALM:</span>
+              <span class="text-[var(--text-main)] font-bold" id="metricDv01">-R$ 428.5K</span>
+            </div>
+            <div class="bg-[var(--bg-card)] px-2 py-1.5 rounded border border-[var(--border-subtle)]">
+              <span class="text-[var(--text-muted)] block">ΔEVE (+100bp):</span>
+              <span class="text-[var(--brand-primary)] font-bold" id="metricEve">-R$ 42.8M</span>
+            </div>
+            <div class="bg-[var(--bg-card)] px-2 py-1.5 rounded border border-[var(--border-subtle)]">
+              <span class="text-[var(--text-muted)] block">ΔNII (1Y):</span>
+              <span class="text-[var(--status-ok)] font-bold" id="metricNii">+R$ 18.4M</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ROW 3: 3 PILLAR CARDS (ACADEMIC, PROFESSIONAL, PERSONAL) -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        
+        <!-- PILLAR 1: ACADEMIC -->
+        <div class="corp-panel p-5 rounded-sm flex flex-col justify-between">
+          <div class="script-watermark" data-watermark="kanji">学術・博士</div>
+          <div class="relative z-10 space-y-3">
+            <div class="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-5 bg-[var(--brand-primary)]"></span>
+                <h2 class="font-aptos text-sm text-[var(--text-main)]" data-i18n="pillar1_title">1. CARREIRA ACADÊMICA &amp; PHD</h2>
+              </div>
+              <span class="text-[10px] font-mono-tech px-2 py-0.5 bg-[var(--bg-card)] border border-[var(--border-main)] text-[var(--brand-primary)]">
+                USP • FGV EESP • IMPA
+              </span>
+            </div>
+            <p class="text-xs text-[var(--text-secondary)]" data-i18n="pillar1_desc"></p>
+            <div class="space-y-2 pt-1 font-mono-tech text-[11px]">
+              <div class="p-2.5 rounded bg-[var(--bg-card)] border-l-2 border-l-[var(--brand-primary)]">
+                <strong class="text-[var(--text-main)] block" data-i18n="pillar1_step_label">PASSO ATUAL (H1):</strong>
+                <span class="text-[var(--text-secondary)]" data-i18n="pillar1_step_text"></span>
+              </div>
+              <div class="p-2.5 rounded bg-[var(--bg-card)] border-l-2 border-l-[var(--brand-secondary)]">
+                <strong class="text-[var(--text-main)] block" data-i18n="pillar1_how_label">COMO ATINGIR (MECÂNICA):</strong>
+                <span class="text-[var(--text-secondary)]" data-i18n="pillar1_how_text"></span>
+              </div>
+            </div>
+          </div>
+          <div class="relative z-10 mt-4 pt-3 border-t border-[var(--border-subtle)] flex justify-between items-center">
+            <span class="text-[10px] font-mono-tech text-[var(--text-muted)]">日本語 KANJI</span>
+            <button onclick="switchMainTab('roadmaps')" class="text-xs font-aptos text-[var(--brand-primary)] hover:underline" data-i18n="btn_open_roadmap">
+              ABRIR MAPA COMPLETO &rarr;
+            </button>
+          </div>
+        </div>
+
+        <!-- PILLAR 2: PROFESSIONAL QUANT -->
+        <div class="corp-panel p-5 rounded-sm flex flex-col justify-between">
+          <div class="script-watermark" data-watermark="hanzi">量化・ㄓㄨˋ</div>
+          <div class="relative z-10 space-y-3">
+            <div class="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-5 bg-[var(--brand-secondary)]"></span>
+                <h2 class="font-aptos text-sm text-[var(--text-main)]" data-i18n="pillar2_title">2. VIDA PROFISSIONAL &amp; QUANT ALM</h2>
+              </div>
+              <span class="text-[10px] font-mono-tech px-2 py-0.5 bg-[var(--bg-card)] border border-[var(--border-subtle)] text-[var(--brand-secondary)]">
+                SANTANDER • TESOURARIA
+              </span>
+            </div>
+            <p class="text-xs text-[var(--text-secondary)]" data-i18n="pillar2_desc"></p>
+            <div class="space-y-2 pt-1 font-mono-tech text-[11px]">
+              <div class="p-2.5 rounded bg-[var(--bg-card)] border-l-2 border-l-[var(--brand-primary)]">
+                <strong class="text-[var(--text-main)] block" data-i18n="pillar2_step_label">PASSO ATUAL (H0/H1):</strong>
+                <span class="text-[var(--text-secondary)]" data-i18n="pillar2_step_text"></span>
+              </div>
+              <div class="p-2.5 rounded bg-[var(--bg-card)] border-l-2 border-l-[var(--status-ok)]">
+                <strong class="text-[var(--text-main)] block" data-i18n="pillar2_how_label">COMO ATINGIR (MECÂNICA):</strong>
+                <span class="text-[var(--text-secondary)]" data-i18n="pillar2_how_text"></span>
+              </div>
+            </div>
+          </div>
+          <div class="relative z-10 mt-4 pt-3 border-t border-[var(--border-subtle)] flex justify-between items-center">
+            <span class="text-[10px] font-mono-tech text-[var(--text-muted)]">繁體漢字 + 注音</span>
+            <button onclick="switchMainTab('econlab')" class="text-xs font-aptos text-[var(--brand-primary)] hover:underline" data-i18n="btn_open_simulators">
+              ABRIR SIMULADORES QUANT &rarr;
+            </button>
+          </div>
+        </div>
+
+        <!-- PILLAR 3: PERSONAL & LANGUAGES -->
+        <div class="corp-panel p-5 rounded-sm flex flex-col justify-between">
+          <div class="script-watermark" data-watermark="hangul">한글・목표</div>
+          <div class="relative z-10 space-y-3">
+            <div class="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-5 bg-[var(--status-ok)]"></span>
+                <h2 class="font-aptos text-sm text-[var(--text-main)]" data-i18n="pillar3_title">3. ASPIRAÇÕES, IDIOMAS &amp; PROSA</h2>
+              </div>
+              <span class="text-[10px] font-mono-tech px-2 py-0.5 bg-[var(--bg-card)] border border-[var(--border-subtle)] text-[var(--status-ok)]">
+                注音符號 • 한글 • GARCIA
+              </span>
+            </div>
+            <p class="text-xs text-[var(--text-secondary)]" data-i18n="pillar3_desc"></p>
+            <div class="space-y-2 pt-1 font-mono-tech text-[11px]">
+              <div class="p-2.5 rounded bg-[var(--bg-card)] border-l-2 border-l-[var(--status-ok)]">
+                <strong class="text-[var(--text-main)] block" data-i18n="pillar3_step_label">PASSO ATUAL (DIÁRIO):</strong>
+                <span class="text-[var(--text-secondary)]" data-i18n="pillar3_step_text"></span>
+              </div>
+              <div class="p-2.5 rounded bg-[var(--bg-card)] border-l-2 border-l-[var(--brand-primary)]">
+                <strong class="text-[var(--text-main)] block" data-i18n="pillar3_how_label">COMO ATINGIR (MECÂNICA):</strong>
+                <span class="text-[var(--text-secondary)]" data-i18n="pillar3_how_text"></span>
+              </div>
+            </div>
+          </div>
+          <div class="relative z-10 mt-4 pt-3 border-t border-[var(--border-subtle)] flex justify-between items-center">
+            <span class="text-[10px] font-mono-tech text-[var(--text-muted)]">한국어 HANGUL</span>
+            <button onclick="switchMainTab('roadmaps')" class="text-xs font-aptos text-[var(--brand-primary)] hover:underline" data-i18n="btn_open_roadmap">
+              ABRIR MAPA COMPLETO &rarr;
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ROW 4: ACTIVE EXECUTION QUEUE ON PAGE 1 -->
+      <div class="corp-panel p-5 rounded-sm space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
+          <div>
+            <h3 class="font-aptos text-sm text-[var(--text-main)] flex items-center gap-2">
+              <i class="ph-bold ph-list-checks text-[var(--brand-primary)]"></i>
+              <span data-i18n="quick_tasks_title">FILA DE EXECUÇÃO IMEDIATA (A FAZER / CONCLUÍDAS)</span>
+            </h3>
+            <p class="text-[11px] text-[var(--text-muted)]" data-i18n="quick_tasks_sub">Clique em "COMO ATINGIR" em qualquer item para abrir o protocolo mecânico anti-paralisia.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="openTaskModal()" class="bg-[var(--brand-primary)] text-white px-3 py-1.5 rounded text-[11px] font-mono-tech font-bold hover:opacity-90 transition flex items-center gap-1">
+              <i class="ph-bold ph-plus"></i> <span data-i18n="btn_add_task">NOVA TAREFA</span>
+            </button>
+            <button onclick="switchMainTab('tasks')" class="border border-[var(--border-main)] text-[var(--text-main)] px-3 py-1.5 rounded text-[11px] font-mono-tech hover:bg-[var(--bg-card-hover)] transition" data-i18n="btn_view_all">
+              VER TODAS
+            </button>
+          </div>
+        </div>
+
+        <div id="overviewTaskList" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+      </div>
+
+    </div>
+
+    <!-- ========================================================================
+         TAB 02: INTERACTIVE MACROECONOMICS & QUANT ALM LABORATORY (4 ENGINES)
+         ======================================================================== -->
+    <div id="section-econlab" class="hidden space-y-6">
+      
+      <div class="corp-panel p-5 rounded-sm">
+        <div class="script-watermark" data-watermark="hanzi">數理經濟</div>
+        <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <span class="text-[10px] font-mono-tech text-[var(--brand-primary)] font-bold uppercase">// SANTANDER ALM DESK • IMPA • FGV EESP • KEYU JIN MACRO LAB</span>
+            <h2 class="font-aptos text-base text-[var(--text-main)] mt-0.5" data-i18n="econlab_title">
+              LABORATÓRIO INTERATIVO DE ECONOMIA &amp; ENGENHARIA QUANT (4 MOTORES EM TEMPO REAL)
+            </h2>
+            <p class="text-xs text-[var(--text-secondary)] mt-1" data-i18n="econlab_sub">
+              Manipule os parâmetros estruturais abaixo para simular choques de balanço (IRRBB), política monetária (Regra de Taylor), câmbio (Dornbusch Overshooting) e processos estocásticos (Vasicek/Itô).
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 INTERACTIVE ENGINES GRID -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- ENGINE 1: ETTJ SVENSSON & IRRBB BALANCE SHEET SHOCK (ΔEVE / ΔNII) -->
+        <div class="corp-panel p-5 rounded-sm space-y-4">
+          <div class="script-watermark" data-watermark="hanzi">殖利率</div>
+          <div class="relative z-10 flex items-center justify-between border-b border-[var(--border-subtle)] pb-2.5">
+            <div>
+              <span class="text-[10px] font-mono-tech text-[var(--brand-primary)] font-bold">ENGINE 01 // ALM &amp; IRRBB</span>
+              <h3 class="font-aptos text-sm text-[var(--text-main)]" data-i18n="eng1_title">CURVA ETTJ SVENSSON &amp; CHOQUE DE BALANÇO (ΔEVE / ΔNII)</h3>
+            </div>
+            <button onclick="resetEngine1()" class="text-[10px] font-mono-tech px-2 py-1 border border-[var(--border-subtle)] rounded hover:border-[var(--brand-primary)]">RESET</button>
+          </div>
+
+          <div class="relative z-10 bg-[var(--bg-input)] border border-[var(--border-subtle)] rounded p-2">
+            <canvas id="labSvenssonCanvas" width="560" height="190" class="w-full h-[190px]"></canvas>
+          </div>
+
+          <div class="relative z-10 grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono-tech text-[10px]">
+            <div class="bg-[var(--bg-card)] p-2 rounded border border-[var(--border-subtle)]">
+              <div class="flex justify-between"><span>β₀ (Level):</span><strong id="val_e1_b0" class="text-[var(--brand-primary)]">11.8%</strong></div>
+              <input type="range" id="sl_e1_b0" min="6" max="18" step="0.2" value="11.8" oninput="runEngine1()" class="w-full mt-1">
+            </div>
+            <div class="bg-[var(--bg-card)] p-2 rounded border border-[var(--border-subtle)]">
+              <div class="flex justify-between"><span>β₁ (Slope):</span><strong id="val_e1_b1" class="text-[var(--brand-secondary)]">-1.6%</strong></div>
+              <input type="range" id="sl_e1_b1" min="-6" max="5" step="0.2" value="-1.6" oninput="runEngine1()" class="w-full mt-1">
+            </div>
+            <div class="bg-[var(--bg-card)] p-2 rounded border border-[var(--border-subtle)]">
+              <div class="flex justify-between"><span>β₂ (Curv.):</span><strong id="val_e1_b2" class="text-[var(--status-ok)]">2.4%</strong></div>
+              <input type="range" id="sl_e1_b2" min="-5" max="6" step="0.2" value="2.4" oninput="runEngine1()" class="w-full mt-1">
+            </div>
+            <div class="bg-[var(--bg-card)] p-2 rounded border border-[var(--border-subtle)]">
+              <div class="flex justify-between"><span>Shock Δr:</span><strong id="val_e1_shock" class="text-[var(--brand-primary)]">+150 bp</strong></div>
+              <input type="range" id="sl_e1_shock" min="-300" max="400" step="25" value="150" oninput="runEngine1()" class="w-full mt-1">
+            </div>
+          </div>
+
+          <div class="relative z-10 grid grid-cols-3 gap-2 font-mono-tech text-[10.5px] pt-1">
+            <div class="p-2 bg-[var(--bg-card)] rounded border-l-2 border-[var(--brand-primary)]">
+              <span class="text-[var(--text-muted)] block">DURATION GAP (D_A - D_L):</span>
+              <strong id="out_e1_dgap" class="text-[var(--text-main)]">+1.85 Anos</strong>
+            </div>
+            <div class="p-2 bg-[var(--bg-card)] rounded border-l-2 border-[var(--brand-secondary)]">
+              <span class="text-[var(--text-muted)] block">IMPACTO ΔEVE:</span>
+              <strong id="out_e1_eve" class="text-[var(--brand-primary)]">-R$ 64.2M</strong>
+            </div>
+            <div class="p-2 bg-[var(--bg-card)] rounded border-l-2 border-[var(--status-ok)]">
+              <span class="text-[var(--text-muted)] block">IMPACTO ΔNII (12M):</span>
+              <strong id="out_e1_nii" class="text-[var(--status-ok)]">+R$ 27.6M</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- ENGINE 2: TAYLOR RULE, SELIC PATH & NEW-KEYNESIAN PHILLIPS CURVE -->
+        <div class="corp-panel p-5 rounded-sm space-y-4">
+          <div class="script-watermark" data-watermark="kanji">金融政策</div>
+          <div class="relative z-10 flex items-center justify-between border-b border-[var(--border-subtle)] pb-2.5">
+            <div>
+              <span class="text-[10px] font-mono-tech text-[var(--brand-secondary)] font-bold">ENGINE 02 // MONETARY MACRO (ANPEC / BCB)</span>
+              <h3 class="font-aptos text-sm text-[var(--text-main)]" data-i18n="eng2_title">REGRA DE TAYLOR, CURVA DE PHILLIPS &amp; TRAJETÓRIA SELIC</h3>
+            </div>
+            <span class="text-[10px] font-mono-tech text-[var(--text-muted)]">i_t = ρ i_{t-1} + (1-ρ)[r* + π_t + α(π-π*) + β(y-y*)]</span>
+          </div>
+
+          <div class="relative z-10 bg-[var(--bg-input)] border border-[var(--border-subtle)] rounded p-2">
+            <canvas id="labTaylorCanvas" width="560" height="190" class="w-full h-[190px]"></canvas>
+          </div>
+
+          <div class="relative z-10 grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono-tech text-[10px]">
+            <div class="bg-[var(--bg-card)] p-2 rounded border border-[var(--border-subtle)]">
+              <div class="flex justify-between"><span>IPCA (π_t):</span><strong id="val_e2_pi" class="text-[var(--brand-primary)]">4.6%</strong></div>
+              <input type="range" id="sl_e2_pi" min="2.0" max="9.0" step="0.1" value="4.6" oninput="runEngine2()" class="w-full mt-1">
+            </div>
+            <div class="bg-[var(--bg-card)] p-2 rounded border border-[var(--border-subtle)]">
+              <div class="flex justify-between"><span>Hiato (y-y*):</span><strong id="val_e2_gap" class="text-[var(--brand-secondary)]">+1.2%</strong></div>
+              <input type="range" id="sl_e2_gap" min="-4.0" max="4.0" step="0.2" value="1.2" oninput="runEngine2()" class="w-full mt-1">
+            </div>
+            <div class="bg-[var(--bg-card)] p-2 rounded border border-[var(--border-subtle)]">
+              <div class="flex justify-between"><span>Juro Neutro r*:</span><strong id="val_e2_rstar" class="text-[var(--status-ok)]">4.8%</strong></div>
+              <input type="range" id="sl_e2_rstar" min="3.0" max="7.0" step="0.1" value="4.8" oninput="runEngine2()" class="w-full mt-1">
+            </div>
+            <div class="bg-[var(--bg-card)] p-2 rounded border border-[var(--border-subtle)]">
+              <div class="flex justify-between"><span>Suavização ρ:</span><strong id="val_e2_rho" class="text-[var(--text-main)]">0.75</strong></div>
+              <input type="range" id="sl_e2_rho" min="0.1" max="0.95" step="0.05" value="0.75" oninput="runEngine2()" class="w-full mt-1">
+            </div>
+          </div>
+
+          <div class="relative z-10 grid grid-cols-3 gap-2 font-mono-tech text-[10.5px] pt-1">
+            <div class="p-2 bg-[var(--bg-card)] rounded border-l-2 border-[var(--brand-primary)]">
+              <span class="text-[var(--text-muted)] block">SELIC TAYLOR ÓTIMA:</span>
+              <strong id="out_e2_selic" class="text-[var(--brand-primary)]">11.60% a.a.</strong>
+            </div>
+            <div class="p-2 bg-[var(--bg-card)] rounded border-l-2 border-[var(--brand-secondary)]">
+              <span class="text-[var(--text-muted)] block">JURO REAL EX-ANTE:</span>
+              <strong id="out_e2_real" class="text-[var(--text-main)]">7.00% a.a.</strong>
+            </div>
+            <div class="p-2 bg-[var(--bg-card)] rounded border-l-2 border-[var(--status-ok)]">
+              <span class="text-[var(--text-muted)] block">IMPULSO CONTRACIONISTA:</span>
+              <strong id="out_e2_stance" class="text-[var(--status-ok)]">+220 bps</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- ENGINE 3: DORNBUSCH FX OVERSHOOTING & UNCOVERED INTEREST PARITY (UIP) -->
+        <div class="corp-panel p-5 rounded-sm space-y-4">
+          <div class="script-watermark" data-watermark="hanzi">匯率超調</div>
+          <div class="relative z-10 flex items-center justify-between border-b border-[var(--border-subtle)] pb-2.5">
+            <div>
+              <span class="text-[10px] font-mono-tech text-[var(--status-ok)] font-bold">ENGINE 03 // INTERNATIONAL MACRO (KEYU JIN / DORNBUSCH)</span>
+              <h3 class="font-aptos text-sm text-[var(--text-main)]" data-i18n="eng3_title">DORNBUSCH FX OVERSHOOTING, PARIDADE DESCOBERTA (UIP) &amp; CUPOM CAMBIAL</h3>
+            </div>
+            <span class="text-[10px] font-mono-tech text-[var(--text-muted)]">E(t) = Ē + (E_0 - Ē)e^{-θt}</span>
+          </div>
+
+          <div class="relative z-10 bg-[var(--bg-input)] border border-[var(--border-subtle)] rounded p-2">
+            <canvas id="labDornbuschCanvas" width="560" height="190" class="w-full h-[190px]"></canvas>
+          </div>
+
+          <div class="relative z-10 grid grid-cols-2 sm:grid-cols-3 gap-3 font-mono-tech text-[10px]">
+            <div class="bg-[var(--bg-card)] p-2 rounded border border-[var(--border-subtle)]">
+              <div class="flex justify-between"><span>Diff. Juros (i_d - i_f):</span><strong id="val_e3_diff" class="text-[var(--status-ok)]">+6.2%</strong></div>
+              <input type="range" id="sl_e3_diff" min="1.0" max="12.0" step="0.2" value="6.2" oninput="runEngine3()" class="w-full mt-1">
+            </div>
+            <div class="bg-[var(--bg-card)] p-2 rounded border border-[var(--border-subtle)]">
+              <div class="flex justify-between"><span>Prêmio CDS / Fiscal:</span><strong id="val_e3_cds" class="text-[var(--brand-primary)]">180 bp</strong></div>
+              <input type="range" id="sl_e3_cds" min="50" max="500" step="10" value="180" oninput="runEngine3()" class="w-full mt-1">
+            </div>
+            <div class="bg-[var(--bg-card)] p-2 rounded border border-[var(--border-subtle)]">
+              <div class="flex justify-between"><span>Rigidez Preços (θ):</span><strong id="val_e3_theta" class="text-[var(--brand-secondary)]">0.45</strong></div>
+              <input type="range" id="sl_e3_theta" min="0.15" max="1.0" step="0.05" value="0.45" oninput="runEngine3()" class="w-full mt-1">
+            </div>
+          </div>
+
+          <div class="relative z-10 grid grid-cols-3 gap-2 font-mono-tech text-[10.5px] pt-1">
+            <div class="p-2 bg-[var(--bg-card)] rounded border-l-2 border-[var(--brand-primary)]">
+              <span class="text-[var(--text-muted)] block">PICO OVERSHOOTING E(0):</span>
+              <strong id="out_e3_peak" class="text-[var(--brand-primary)]">R$ 5.84 / USD</strong>
+            </div>
+            <div class="p-2 bg-[var(--bg-card)] rounded border-l-2 border-[var(--brand-secondary)]">
+              <span class="text-[var(--text-muted)] block">EQUILÍBRIO LONGO PRAZO Ē:</span>
+              <strong id="out_e3_eq" class="text-[var(--text-main)]">R$ 5.32 / USD</strong>
+            </div>
+            <div class="p-2 bg-[var(--bg-card)] rounded border-l-2 border-[var(--status-ok)]">
+              <span class="text-[var(--text-muted)] block">CARRY-TO-RISK RATIO:</span>
+              <strong id="out_e3_carry" class="text-[var(--status-ok)]">+4.40% Líq.</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- ENGINE 4: VASICEK / ITÔ STOCHASTIC SHORT-RATE MONTE CARLO -->
+        <div class="corp-panel p-5 rounded-sm space-y-4">
+          <div class="script-watermark" data-watermark="kanji">確率微分</div>
+          <div class="relative z-10 flex items-center justify-between border-b border-[var(--border-subtle)] pb-2.5">
+            <div>
+              <span class="text-[10px] font-mono-tech text-[var(--brand-primary)] font-bold">ENGINE 04 // STOCHASTIC CALCULUS (IMPA / SHREVE)</span>
+              <h3 class="font-aptos text-sm text-[var(--text-main)]" data-i18n="eng4_title">MONTE CARLO ESTOCÁSTICO DE VASICEK / ITÔ (dr_t = κ(θ - r_t)dt + σdW_t)</h3>
+            </div>
+            <button onclick="runEngine4()" class="px-2.5 py-1 bg-[var(--brand-primary)] text-white rounded font-mono-tech text-[10px] font-bold">
+              NOVA SIMULAÇÃO
+            </button>
+          </div>
+
+          <div class="relative z-10 bg-[var(--bg-input)] border border-[var(--border-subtle)] rounded p-2">
+            <canvas id="labVasicekCanvas" width="560" height="190" class="w-full h-[190px]"></canvas>
+          </div>
+
+          <div class="relative z-10 grid grid-cols-3 gap-3 font-mono-tech text-[10px]">
+            <div class="bg-[var(--bg-card)] p-2 rounded border border-[var(--border-subtle)]">
+              <div class="flex justify-between"><span>Reversão (κ):</span><strong id="val_e4_kappa" class="text-[var(--brand-primary)]">0.60</strong></div>
+              <input type="range" id="sl_e4_kappa" min="0.1" max="2.0" step="0.1" value="0.60" oninput="runEngine4()" class="w-full mt-1">
+            </div>
+            <div class="bg-[var(--bg-card)] p-2 rounded border border-[var(--border-subtle)]">
+              <div class="flex justify-between"><span>Média Longo (θ):</span><strong id="val_e4_theta" class="text-[var(--brand-secondary)]">10.5%</strong></div>
+              <input type="range" id="sl_e4_theta" min="6.0" max="16.0" step="0.5" value="10.5" oninput="runEngine4()" class="w-full mt-1">
+            </div>
+            <div class="bg-[var(--bg-card)] p-2 rounded border border-[var(--border-subtle)]">
+              <div class="flex justify-between"><span>Volatilidade (σ):</span><strong id="val_e4_sigma" class="text-[var(--status-ok)]">1.8%</strong></div>
+              <input type="range" id="sl_e4_sigma" min="0.4" max="4.5" step="0.2" value="1.8" oninput="runEngine4()" class="w-full mt-1">
+            </div>
+          </div>
+
+          <div class="relative z-10 grid grid-cols-3 gap-2 font-mono-tech text-[10.5px] pt-1">
+            <div class="p-2 bg-[var(--bg-card)] rounded border-l-2 border-[var(--brand-primary)]">
+              <span class="text-[var(--text-muted)] block">ESPERANÇA E[r_T]:</span>
+              <strong id="out_e4_mean" class="text-[var(--text-main)]">10.62%</strong>
+            </div>
+            <div class="p-2 bg-[var(--bg-card)] rounded border-l-2 border-[var(--brand-secondary)]">
+              <span class="text-[var(--text-muted)] block">BANDA 95% SUP (VaR):</span>
+              <strong id="out_e4_up" class="text-[var(--brand-primary)]">13.45%</strong>
+            </div>
+            <div class="p-2 bg-[var(--bg-card)] rounded border-l-2 border-[var(--status-ok)]">
+              <span class="text-[var(--text-muted)] block">PREÇO ZERO-COUPON P(0,5Y):</span>
+              <strong id="out_e4_zcb" class="text-[var(--status-ok)]">0.5984</strong>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ========================================================================
+         TAB 03: JORNADAS & COMO ATINGIR (DYNAMICALLY TRANSLATED)
+         ======================================================================== -->
+    <div id="section-roadmaps" class="hidden space-y-6">
+      <div class="corp-panel p-5 rounded-sm">
+        <div class="script-watermark" data-watermark="kanji">戦略・実行</div>
+        <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 class="font-aptos text-base text-[var(--brand-primary)]" data-i18n="roadmap_main_title">
+              ARQUITETURA DE LONGO PRAZO &amp; PROTOCOLOS DE EXECUÇÃO ("COMO ATINGIR")
+            </h2>
+            <p class="text-xs text-[var(--text-secondary)] mt-1 max-w-4xl" data-i18n="roadmap_main_sub"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Dynamically rendered Academic, Quant, Math & Languages containers -->
+        <div id="dynamicRoadmapsLeft" class="space-y-6"></div>
+        <div id="dynamicRoadmapsRight" class="space-y-6"></div>
+      </div>
+    </div>
+
+    <!-- ========================================================================
+         TAB 04: CENTRAL DE TAREFAS, PRIORIDADES & HORIZONTES
+         ======================================================================== -->
+    <div id="section-tasks" class="hidden space-y-5">
+      <div class="corp-panel p-4 rounded-sm flex flex-wrap items-center justify-between gap-4">
+        <div class="flex flex-wrap items-center gap-3">
+          <div>
+            <label class="block text-[9px] font-mono-tech text-[var(--text-muted)] uppercase" data-i18n="filter_pillar_label">PILAR DA VIDA</label>
+            <select id="filterPillar" onchange="renderFullTaskBoard()" class="bg-[var(--bg-input)] border border-[var(--border-subtle)] rounded px-2.5 py-1.5 text-xs font-mono-tech text-[var(--text-main)]">
+              <option value="ALL" data-i18n="opt_all_pillars">Todos os Pilares</option>
+              <option value="ACADEMIC" data-i18n="opt_academic">Carreira Acadêmica / PhD / Math</option>
+              <option value="QUANT" data-i18n="opt_quant">Vida Profissional / Quant / Santander</option>
+              <option value="PERSONAL" data-i18n="opt_personal">Aspirações / Idiomas / Prosa</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-[9px] font-mono-tech text-[var(--text-muted)] uppercase" data-i18n="filter_prio_label">PRIORIDADE</label>
+            <select id="filterPriority" onchange="renderFullTaskBoard()" class="bg-[var(--bg-input)] border border-[var(--border-subtle)] rounded px-2.5 py-1.5 text-xs font-mono-tech text-[var(--text-main)]">
+              <option value="ALL">P0 - P3</option>
+              <option value="P0">P0 - Critical</option>
+              <option value="P1">P1 - High</option>
+              <option value="P2">P2 - Medium</option>
+              <option value="P3">P3 - Long Term</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-[9px] font-mono-tech text-[var(--text-muted)] uppercase" data-i18n="filter_status_label">STATUS</label>
+            <select id="filterStatus" onchange="renderFullTaskBoard()" class="bg-[var(--bg-input)] border border-[var(--border-subtle)] rounded px-2.5 py-1.5 text-xs font-mono-tech text-[var(--text-main)]">
+              <option value="ALL" data-i18n="opt_status_all">A Fazer + Concluídas</option>
+              <option value="PENDING" data-i18n="opt_status_pending">Apenas A Fazer</option>
+              <option value="DONE" data-i18n="opt_status_done">Apenas Concluídas</option>
+            </select>
+          </div>
+        </div>
+
+        <button onclick="openTaskModal()" class="bg-[var(--brand-primary)] text-white px-4 py-2 rounded text-xs font-aptos tracking-wider hover:opacity-90 transition flex items-center gap-2">
+          <i class="ph-bold ph-plus-circle text-base"></i>
+          <span data-i18n="btn_add_task">NOVA TAREFA</span>
+        </button>
+      </div>
+
+      <div id="fullTaskListContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+    </div>
+
+    <!-- ========================================================================
+         TAB 05: PROTOCOLO ANTI-PARALISIA (DYNAMICALLY TRANSLATED)
+         ======================================================================== -->
+    <div id="section-emergency" class="hidden space-y-6">
+      <div id="emergencyDynamicContainer"></div>
+    </div>
+
+  </main>
+
+  <!-- ==========================================================================
+       MODAL: ADD NEW TASK
+       ========================================================================== -->
+  <div id="taskModal" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="corp-panel max-w-lg w-full p-5 rounded-sm space-y-4">
+      <div class="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2">
+        <span class="font-aptos text-sm text-[var(--brand-primary)]" data-i18n="modal_add_title">// ADICIONAR TAREFA OU META ESTRUTURAL</span>
+        <button onclick="closeTaskModal()" class="text-[var(--text-muted)] hover:text-[var(--text-main)]">✕</button>
+      </div>
+
+      <form onsubmit="submitNewTask(event)" class="space-y-3 text-xs font-mono-tech">
+        <div>
+          <label class="block text-[var(--text-muted)] mb-1" data-i18n="modal_lbl_title">TÍTULO DO OBJETIVO / TAREFA:</label>
+          <input type="text" id="newTaskTitle" required class="w-full bg-[var(--bg-input)] border border-[var(--border-subtle)] rounded p-2 text-[var(--text-main)] outline-none focus:border-[var(--brand-primary)]">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[var(--text-muted)] mb-1" data-i18n="filter_pillar_label">PILAR:</label>
+            <select id="newTaskPillar" class="w-full bg-[var(--bg-input)] border border-[var(--border-subtle)] rounded p-2 text-[var(--text-main)]">
+              <option value="ACADEMIC">Academic / PhD / Math</option>
+              <option value="QUANT">Professional / Quant / ALM</option>
+              <option value="PERSONAL">Personal / Languages / Prose</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-[var(--text-muted)] mb-1" data-i18n="filter_prio_label">PRIORIDADE:</label>
+            <select id="newTaskPriority" class="w-full bg-[var(--bg-input)] border border-[var(--border-subtle)] rounded p-2 text-[var(--text-main)]">
+              <option value="P0">P0 - Critical</option>
+              <option value="P1">P1 - High</option>
+              <option value="P2">P2 - Medium</option>
+              <option value="P3">P3 - Long Term</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-[var(--text-muted)] mb-1" data-i18n="modal_lbl_micro">MICRO-AÇÃO DE 30 SEGUNDOS (REGRA DOS 2%):</label>
+          <input type="text" id="newTaskMicro" class="w-full bg-[var(--bg-input)] border border-[var(--border-subtle)] rounded p-2 text-[var(--text-main)] outline-none focus:border-[var(--brand-primary)]">
+        </div>
+
+        <div>
+          <label class="block text-[var(--text-muted)] mb-1" data-i18n="modal_lbl_howto">COMO ATINGIR (PASSO A PASSO TÉCNICO):</label>
+          <textarea id="newTaskHowTo" rows="3" class="w-full bg-[var(--bg-input)] border border-[var(--border-subtle)] rounded p-2 text-[var(--text-main)] outline-none focus:border-[var(--brand-primary)]"></textarea>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-2 border-t border-[var(--border-subtle)]">
+          <button type="button" onclick="closeTaskModal()" class="px-3 py-1.5 rounded border border-[var(--border-subtle)] text-[var(--text-muted)]" data-i18n="btn_cancel">CANCELAR</button>
+          <button type="submit" class="px-4 py-1.5 rounded bg-[var(--brand-primary)] text-white font-bold" data-i18n="btn_save">SALVAR</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- SENSORY PURGE OVERLAY -->
+  <div id="sensoryPurgeModal" class="fixed inset-0 bg-black z-50 hidden flex flex-col items-center justify-center p-6 text-center font-mono-tech">
+    <div class="max-w-md space-y-4">
+      <div class="w-3 h-3 rounded-full bg-[var(--brand-primary)] animate-ping mx-auto"></div>
+      <h3 class="font-aptos text-base text-[var(--brand-primary)]">BLACKWALL NEURAL RESET // 60s</h3>
+      <p class="text-xs text-gray-400 leading-relaxed" id="purgeModalText">
+        1. Solte os ombros e destrave os dentes molares (4mm).<br>
+        2. Inspire em 4s, segure 2s, solte em 6s.<br>
+        Zero cobrança neste minuto.
+      </p>
+      <button onclick="toggleSensoryPurge(false)" class="mt-4 px-4 py-2 border border-gray-700 text-gray-300 hover:border-[var(--brand-primary)] hover:text-white rounded text-xs">
+        [ ESC / RETURN ]
+      </button>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="systemToast" class="fixed bottom-4 right-4 bg-[var(--bg-surface)] border-l-4 border-l-[var(--brand-primary)] border border-[var(--border-main)] px-4 py-2.5 rounded shadow-xl font-mono-tech text-xs transform translate-y-20 opacity-0 transition-all duration-300 z-50">
+    <span id="systemToastText">// OK</span>
+  </div>
+
+  <!-- ==========================================================================
+       COMPREHENSIVE JAVASCRIPT ENGINE
+       ========================================================================== -->
+  <script>
+    /* --------------------------------------------------------------------------
+       1. COMPLETE MULTILINGUAL DATABASE (PT-BR, EN-GB, ZH-TW+ZHUYIN, KO-KR)
+       -------------------------------------------------------------------------- */
+    const I18N_DB = {
+      pt: {
+        mainTitle: "ARASAKA // SISTEMA EXECUTIVO QUANT",
+        subtitle: "Mesa ALM • Matemática IMPA/ANPEC • DuckDB & Python • 繁體注音 & 한글",
+        timer_label: "PROTOCOLO 15M",
+        nav_overview: "01 // VISÃO GERAL, FOTOS, ASCII & SIMULADORES",
+        nav_econlab: "02 // LABORATÓRIO MACRO & QUANT ALM (4 MOTORES)",
+        nav_roadmaps: "03 // JORNADAS & COMO ATINGIR (PHD / QUANT / IDIOMAS)",
+        nav_tasks: "04 // CENTRAL DE TAREFAS & PRIORIDADES",
+        nav_emergency: "05 // ANTI-PARALISIA (REGRA 2%)",
+        kpi_completion: "ÍNDICE DE EXECUÇÃO GERAL",
+        kpi_done_word: "Concluídas",
+        kpi_todo_word: "A Fazer",
+        kpi_critical: "PRIORIDADE CRÍTICA (P0 / H0)",
+        kpi_critical_sub: "Blindagem Santander, Artigo ALM & Burocracias Zero-Atrito",
+        status_online: "● SISTEMA ESTÁVEL",
+        btn_view_queue: "VER FILA →",
+        kpi_quant: "MATEMÁTICA IMPA & QUANT",
+        kpi_quant_path: "Axiomas → Análise Real → ETTJ",
+        btn_protocol: "PROTOCOLO →",
+        kpi_lang: "IDIOMAS & PROSA MODERNA",
+        kpi_lang_sub: "Blocos diários de 15m + Othon M. Garcia + Dicção Mecânica",
+        lang_paused_note: "DE/FR/JP: PAUSADOS",
+        btn_train_15m: "TREINAR 15M →",
+        p1_photo_title: "// MURAL VISUAL & FOTOS (PÁGINA 1)",
+        p1_photo_sub: "Suba suas fotos, curvas ou inspirações diretamente aqui",
+        btn_upload_photo: "SUBIR FOTO",
+        p1_ascii_title: "// TERMINAL ASCII INTERATIVO (PÁGINA 1)",
+        p1_ascii_sub: "Escolha um preset ou cole sua arte ASCII diretamente aqui",
+        btn_edit_ascii: "EDITAR",
+        btn_save_ascii: "SALVAR ASCII",
+        btn_cancel: "CANCELAR",
+        btn_save: "SALVAR",
+        ascii_status_saved: "● PERSISTÊNCIA LOCAL ATIVA",
+        chart_title: "MOTOR QUANT // ETTJ SVENSSON & IRRBB ALM",
+        btn_shock_curve: "CHOQUE Δr",
+        btn_open_4_engines: "4 MOTORES →",
+        pillar1_title: "1. CARREIRA ACADÊMICA & PHD",
+        pillar1_desc: "Da Iniciação Científica em ALM com os dois professores doutores até a Matemática Formal (Elon Lages Lima), aprovação na ANPEC/IMPA e PhD internacional em Economia (padrão Keyu Jin).",
+        pillar1_step_label: "PASSO ATUAL (H1):",
+        pillar1_step_text: "Artigo empírico de ALM/IRRBB com dados do Banco Central + Base Axiomática de Matemática.",
+        pillar1_how_label: "COMO ATINGIR (MECÂNICA):",
+        pillar1_how_text: "3 exercícios fundamentais por dia antes da teoria densa; alinhamentos quinzenais curtos com os orientadores.",
+        pillar2_title: "2. VIDA PROFISSIONAL & QUANT ALM",
+        pillar2_desc: "Blindagem técnica no Santander substituindo planilhas frágeis por motores em Python + DuckDB. Construção de curvas ETTJ e transição para Desk Quant / ALM Especialista ou Macro Research.",
+        pillar2_step_label: "PASSO ATUAL (H0/H1):",
+        pillar2_step_text: "Automatizar ingestão de bases sujas em SQL/DuckDB e estruturar interpolação flat-forward / Svensson.",
+        pillar2_how_label: "COMO ATINGIR (MECÂNICA):",
+        pillar2_how_text: "Converter 1 rotina manual do banco por semana em script modular de 40 linhas em Python.",
+        pillar3_title: "3. ASPIRAÇÕES, IDIOMAS & PROSA",
+        pillar3_desc: "Dedicação diária atômica ao Chinês (Hanzi + Zhuyin) e Coreano (Hangul), domínio da prosa de Othon M. Garcia e destravamento biomecânico da voz e da função executiva.",
+        pillar3_step_label: "PASSO ATUAL (DIÁRIO):",
+        pillar3_step_text: "15 min de Zhuyin/Hanzi + 15 min de leitura mecânica em Hangul + abertura vertical da mandíbula.",
+        pillar3_how_label: "COMO ATINGIR (MECÂNICA):",
+        pillar3_how_text: "Nunca estudar mais de 15m quando cansado; usar a Regra dos 2% (desenhar 1 caractere já vence a inércia).",
+        btn_open_roadmap: "ABRIR MAPA COMPLETO →",
+        btn_open_simulators: "ABRIR SIMULADORES QUANT →",
+        quick_tasks_title: "FILA DE EXECUÇÃO IMEDIATA (A FAZER / CONCLUÍDAS)",
+        quick_tasks_sub: "Clique em 'COMO ATINGIR' em qualquer item para abrir o protocolo mecânico anti-paralisia.",
+        btn_add_task: "NOVA TAREFA",
+        btn_view_all: "VER TODAS",
+        btn_howto: "COMO ATINGIR",
+        btn_start_15m: "▶ INICIAR 15M AGORA",
+        lbl_micro_action: "2% Micro-Ação:",
+        lbl_howto_header: "// PROTOCOLO MECÂNICO DE EXECUÇÃO:",
+        econlab_title: "LABORATÓRIO INTERATIVO DE ECONOMIA & ENGENHARIA QUANT (4 MOTORES EM TEMPO REAL)",
+        econlab_sub: "Manipule os parâmetros estruturais abaixo para simular choques de balanço (IRRBB), política monetária (Regra de Taylor), câmbio (Dornbusch Overshooting) e processos estocásticos (Vasicek/Itô).",
+        eng1_title: "CURVA ETTJ SVENSSON & CHOQUE DE BALANÇO (ΔEVE / ΔNII)",
+        eng2_title: "REGRA DE TAYLOR, CURVA DE PHILLIPS & TRAJETÓRIA SELIC",
+        eng3_title: "DORNBUSCH FX OVERSHOOTING, PARIDADE DESCOBERTA (UIP) & CUPOM",
+        eng4_title: "MONTE CARLO ESTOCÁSTICO DE VASICEK / ITÔ (dr_t = κ(θ - r_t)dt + σdW_t)",
+        roadmap_main_title: "ARQUITETURA DE LONGO PRAZO & PROTOCOLOS DE EXECUÇÃO ('COMO ATINGIR')",
+        roadmap_main_sub: "Mapeamento completo bottom-up: cada objetivo decomposto em bibliografia exata, ferramentas técnicas e micro-hábitos diários.",
+        filter_pillar_label: "PILAR DA VIDA",
+        filter_prio_label: "PRIORIDADE",
+        filter_status_label: "STATUS",
+        opt_all_pillars: "Todos os Pilares",
+        opt_academic: "Carreira Acadêmica / PhD / Math",
+        opt_quant: "Vida Profissional / Quant / Santander",
+        opt_personal: "Aspirações / Idiomas / Prosa",
+        opt_status_all: "A Fazer + Concluídas",
+        opt_status_pending: "Apenas A Fazer",
+        opt_status_done: "Apenas Concluídas",
+        modal_add_title: "// ADICIONAR TAREFA OU META ESTRUTURAL",
+        modal_lbl_title: "TÍTULO DO OBJETIVO / TAREFA:",
+        modal_lbl_micro: "MICRO-AÇÃO DE 30 SEGUNDOS (REGRA DOS 2%):",
+        modal_lbl_howto: "COMO ATINGIR (PASSO A PASSO TÉCNICO):",
+        pillarBadges: {
+          ACADEMIC: "ACADÊMICO / PHD / MATH",
+          QUANT: "PROFISSIONAL / QUANT ALM",
+          PERSONAL: "IDIOMAS / PROSA / PESSOAL"
+        },
+        roadmaps: {
+          track1_tag: "// TRILHA 01 • CARREIRA ACADÊMICA",
+          track1_title: "JORNADA ATÉ O PH.D. (IC ALM → ANPEC / EESP / IMPA → DOUTORADO)",
+          t1_f1_title: "FASE 1: INICIAÇÃO CIENTÍFICA EM ALM (DOUTORES USP/INSPER)",
+          t1_f1_desc: "Artigo empírico sobre gestão de balanço e risco de taxa de juros (IRRBB) no setor bancário usando dados públicos do Banco Central (IF.data).",
+          t1_f1_how: "COMO ATINGIR: Semana 1: Baixar série histórica via Python. Semana 2: Gerar 2 tabelas no DuckDB. Semana 3: Enviar prévia de 1 página aos dois orientadores.",
+          t1_f2_title: "FASE 2: EXAME ANPEC & MESTRADO (FGV EESP OU IMPA)",
+          t1_f2_desc: "Preparação intensiva em Matemática, Estatística e Macroeconomia da ANPEC (FGV EESP) ou aplicação direta para Matemática Aplicada no IMPA.",
+          t1_f2_how: "COMO ATINGIR: Resolver 2 questões da ANPEC por dia. Para o IMPA, dominar Análise na Reta (Elon Lages Lima) com cartas fortes dos doutores de ALM.",
+          t1_f3_title: "FASE 3: PH.D. & MACRO RESEARCH GLOBAL (KEYU JIN / VALENTINI)",
+          t1_f3_desc: "Doutorado de elite em Economia / Finanças Quantitativas, unindo equilíbrio geral, redes financeiras e visão macro global (estilo Keyu Jin / Vinicius Moreira).",
+          t1_f3_how: "COMO ATINGIR: Publicar o working paper de ALM, nota máxima nas disciplinas matemáticas do mestrado e tese em política monetária e ETTJ.",
+          track2_tag: "// TRILHA 02 • ENGENHARIA QUANT & TRABALHO",
+          track2_title: "JORNADA PYTHON, DUCKDB & ETTJ (BLINDAGEM SANTANDER → QUANT DESK)",
+          t2_f1_title: "ETAPA 1: EXTINÇÃO DO EXCEL FRÁGIL COM DUCKDB + PYTHON",
+          t2_f1_desc: "Processar bases corrompidas ou gigantescas diretamente em SQL via DuckDB e Polars, garantindo velocidade e segurança no Santander.",
+          t2_f1_how: "COMO ATINGIR: Criar pipeline padrão (ingest_clean.py) que lê CSVs/Parquets sujos com duckdb.sql() e exporta resultado auditável em 2 segundos.",
+          t2_f2_title: "ETAPA 2: MOTOR DE CURVA DE JUROS (ETTJ) & MÉTRICAS ALM",
+          t2_f2_desc: "Implementar Flat-Forward, Cubic Splines e Nelson-Siegel-Svensson para vértices DI1 e cálculo automatizado de DV01, NII e EVE.",
+          t2_f2_how: "COMO ATINGIR: Usar scipy.optimize + numpy vetorizado para calibrar (β0, β1, β2, β3, λ1, λ2) contra taxas ANBIMA/B3 diariamente.",
+          track3_tag: "// TRILHA 03 • RECONSTRUÇÃO MATEMÁTICA RIGOROSA",
+          track3_title: "MATEMÁTICA FORMAL: DOS AXIOMAS E FRAÇÕES AO NÍVEL IMPA & ESTOCÁSTICO",
+          track4_tag: "// TRILHA 04 • CULTURA, LINGUÍSTICA & EXPRESSÃO",
+          track4_title: "CHINÊS (漢字 + 注音), COREANO (한글) & PROSA MODERNA (OTHON GARCIA)",
+          t4_f1_title: "1. MANDARIM: HANZI (漢字) & ZHUYIN FUHAO (注音符號 ㄅㄆㄇㄈ)",
+          t4_f1_desc: "Fonética pura via Bopomofo (sem interferência de letras latinas) e escrita estrutural de caracteres por radicais.",
+          t4_f1_how: "COMO ATINGIR: 10 minutos desenhando 3 caracteres novos + 5 minutos de leitura fonética em voz alta com Zhuyin.",
+          t4_f2_title: "2. COREANO: FLUÊNCIA MECÂNICA NO HANGUL (한글) & SINTAXE",
+          t4_f2_desc: "Automatização da decodificação silábica do Hangul, regras de Batchim (받침) e partículas estruturais.",
+          t4_f2_how: "COMO ATINGIR: Ler 1 parágrafo curto em Hangul por dia focando em ressonância de peito e espaçamento vertical da mandíbula.",
+          t4_f3_title: "3. COMUNICAÇÃO EM PROSA MODERNA (OTHON M. GARCIA) & VOZ",
+          t4_f3_desc: "Substituir traduções mentais truncadas por períodos claros e concisos; manter dicção firme nas plosivas finais.",
+          t4_f3_how: "COMO ATINGIR: Analisar 2 páginas de Othon M. Garcia e refatorar 1 parágrafo técnico de economia/ALM por dia."
+        },
+        emergency: {
+          tag: "// ENGENHARIA NEURO-EXECUTIVA",
+          title: "DESACOPLADOR DE INÉRCIA & DISFUNÇÃO EXECUTIVA (PROTOCOLO 2%)",
+          sub: "Quando você souber exatamente o que precisa fazer, mas o corpo não responder: pare de usar 'força de vontade'. Acione um disparo mecânico abaixo para reduzir o atrito a zero.",
+          btn_purge: "ISOLAMENTO SENSORIAL (60s)",
+          col1_title: "1. IGNIÇÃO FÍSICA DE 30 SEGUNDOS (REGRA DOS 2%)",
+          c1_math_t: "TRAVADO NA MATEMÁTICA:",
+          c1_math_d: "Abra o caderno, escreva apenas a data de hoje e copie 1 única fração ou axioma. Nada mais.",
+          c1_py_t: "TRAVADO NO PYTHON / DUCKDB:",
+          c1_py_d: "Abra o editor e digite apenas 'import duckdb'. Execute a linha. O cérebro sairá do estado estático.",
+          c1_lang_t: "TRAVADO NO CHINÊS / COREANO:",
+          c1_lang_d: "Desenhe 1 único Hanzi ou leia 3 sílabas em Hangul em voz alta.",
+          col2_title: "2. RESPOSTAS PRONTAS (COPIAR E ENVIAR SEM PENSAR)",
+          c2_alm_label: "Orientadores ALM (Doutores):",
+          c2_alm_text: "Olá, Professor! Estruturei a extração preliminar dos dados do BCB para o estudo de ALM. Podemos alinhar os próximos passos em 15 minutos nesta semana?",
+          c2_prep_label: "Professor Preply (Chinês/Coreano):",
+          c2_prep_text: "Olá, professor(a)! Preciso reagendar nosso horário desta semana devido a uma demanda urgente no banco. Quais horários você teria livres?",
+          btn_copy: "COPIAR",
+          col3_title: "3. CALIBRAGEM VOCAL & BIOMECÂNICA",
+          c3_jaw_t: "ESPAÇO VERTICAL (CÉU DA BOCA):",
+          c3_jaw_d: "Destrave os molares (4mm de distância vertical) antes de pronunciar vogais fechadas ou palavras como 'absolute' e 'precision'.",
+          c3_chest_t: "ANCORAGEM DE PEITO (INGLÊS / PT):",
+          c3_chest_d: "Solte o ar abdominalmente e finalize cada consoante plosiva (t, k, p, d) com firmeza, sem subir o tom no final da frase."
+        }
+      },
+
+      en: {
+        mainTitle: "ARASAKA // QUANTUM EXECUTIVE OS (UK SPEC)",
+        subtitle: "ALM Treasury Desk • IMPA/ANPEC Rigorous Maths • DuckDB Programme • 繁體注音 & 한글",
+        timer_label: "15M PROTOCOL",
+        nav_overview: "01 // OVERVIEW, PHOTOS, ASCII & SIMULATORS",
+        nav_econlab: "02 // MACRO & QUANT ALM LABORATORY (4 ENGINES)",
+        nav_roadmaps: "03 // ROADMAPS & HOW TO ACHIEVE (PHD / QUANT / LANGUAGES)",
+        nav_tasks: "04 // TASK & PRIORITY COMMAND CENTRE",
+        nav_emergency: "05 // ANTI-PARALYSIS (2% PROTOCOL)",
+        kpi_completion: "OVERALL EXECUTION INDEX",
+        kpi_done_word: "Completed",
+        kpi_todo_word: "To-Do",
+        kpi_critical: "CRITICAL PRIORITY (P0 / H0)",
+        kpi_critical_sub: "Santander Desk Armour, ALM Research & Zero-Friction Admin",
+        status_online: "● SYSTEM NOMINAL",
+        btn_view_queue: "VIEW QUEUE →",
+        kpi_quant: "IMPA MATHS & QUANT STACK",
+        kpi_quant_path: "Axioms → Real Analysis → Yield Curve",
+        btn_protocol: "PROTOCOL →",
+        kpi_lang: "ASIAN LANGUAGES & PROSE",
+        kpi_lang_sub: "Daily 15m blocks + Othon M. Garcia + Mechanical Diction",
+        lang_paused_note: "DE/FR/JP: PAUSED",
+        btn_train_15m: "TRAIN 15M →",
+        p1_photo_title: "// VISUAL DECK & PHOTOS (PAGE 1)",
+        p1_photo_sub: "Upload your photos, yield curves or visual targets directly here",
+        btn_upload_photo: "UPLOAD PHOTO",
+        p1_ascii_title: "// INTERACTIVE ASCII TERMINAL (PAGE 1)",
+        p1_ascii_sub: "Select a preset or paste your custom ASCII art directly here",
+        btn_edit_ascii: "EDIT",
+        btn_save_ascii: "SAVE ASCII",
+        btn_cancel: "CANCEL",
+        btn_save: "SAVE",
+        ascii_status_saved: "● LOCAL PERSISTENCE ACTIVE",
+        chart_title: "QUANT ENGINE // ETTJ SVENSSON & IRRBB ALM",
+        btn_shock_curve: "SHOCK Δr",
+        btn_open_4_engines: "4 ENGINES →",
+        pillar1_title: "1. ACADEMIC CAREER & PHD PATHWAY",
+        pillar1_desc: "From ALM Undergraduate Research with both PhD Supervisors to Real Analysis mastery (Elon Lages Lima), ANPEC/IMPA admission, and an International PhD in Economics (Keyu Jin standard).",
+        pillar1_step_label: "CURRENT STEP (H1):",
+        pillar1_step_text: "Empirical ALM/IRRBB paper using Central Bank data + Axiomatic Mathematics foundation.",
+        pillar1_how_label: "HOW TO ACHIEVE (MECHANICS):",
+        pillar1_how_text: "Solve 3 foundational problems daily before reading dense theory; fortnightly 15m syncs with supervisors.",
+        pillar2_title: "2. PROFESSIONAL LIFE & QUANT ALM",
+        pillar2_desc: "Technical armour at Santander replacing fragile spreadsheets with Python + DuckDB engines. Yield curve modelling and progression to Quant Desk / Specialist ALM or Macro Research.",
+        pillar2_step_label: "CURRENT STEP (H0/H1):",
+        pillar2_step_text: "Automate dirty data ingestion via SQL/DuckDB and build flat-forward / Svensson curve interpolators.",
+        pillar2_how_label: "HOW TO ACHIEVE (MECHANICS):",
+        pillar2_how_text: "Convert 1 manual bank spreadsheet per week into a modular 40-line Python script.",
+        pillar3_title: "3. PERSONAL ASPIRATIONS, LANGUAGES & PROSE",
+        pillar3_desc: "Daily atomic dedication to Mandarin (Hanzi + Zhuyin) and Korean (Hangul), Othon M. Garcia prose clarity, and biomechanical vocal & executive unlocking.",
+        pillar3_step_label: "CURRENT STEP (DAILY):",
+        pillar3_step_text: "15m Zhuyin/Hanzi + 15m mechanical Hangul reading + 4mm vertical jaw spacing.",
+        pillar3_how_label: "HOW TO ACHIEVE (MECHANICS):",
+        pillar3_how_text: "Never study over 15m when fatigued; apply the 2% Rule (drawing 1 character defeats inertia).",
+        btn_open_roadmap: "OPEN FULL ROADMAP →",
+        btn_open_simulators: "OPEN QUANT SIMULATORS →",
+        quick_tasks_title: "IMMEDIATE EXECUTION QUEUE (TO-DO / COMPLETED)",
+        quick_tasks_sub: "Click 'HOW TO ACHIEVE' on any item to reveal the mechanical anti-paralysis protocol.",
+        btn_add_task: "NEW DIRECTIVE",
+        btn_view_all: "VIEW ALL",
+        btn_howto: "HOW TO ACHIEVE",
+        btn_start_15m: "▶ START 15M BLOCK NOW",
+        lbl_micro_action: "2% Micro-Action:",
+        lbl_howto_header: "// MECHANICAL EXECUTION PROTOCOL:",
+        econlab_title: "INTERACTIVE MACROECONOMICS & QUANT ALM LABORATORY (4 REAL-TIME ENGINES)",
+        econlab_sub: "Adjust structural parameters below to simulate balance sheet shocks (IRRBB), monetary policy (Taylor Rule), FX (Dornbusch Overshooting), and stochastic rates (Vasicek/Itô).",
+        eng1_title: "SVENSSON YIELD CURVE & BALANCE SHEET SHOCK (ΔEVE / ΔNII)",
+        eng2_title: "TAYLOR RULE, PHILLIPS CURVE & SELIC TARGET TRAJECTORY",
+        eng3_title: "DORNBUSCH FX OVERSHOOTING, UNCOVERED PARITY (UIP) & BASIS",
+        eng4_title: "VASICEK / ITÔ STOCHASTIC SHORT-RATE MONTE CARLO",
+        roadmap_main_title: "LONG-TERM ARCHITECTURE & MECHANICAL EXECUTION PROTOCOLS ('HOW TO ACHIEVE')",
+        roadmap_main_sub: "Complete bottom-up mapping: every objective decomposed into exact bibliography, technical tooling, and daily atomic habits.",
+        filter_pillar_label: "LIFE PILLAR",
+        filter_prio_label: "PRIORITY",
+        filter_status_label: "STATUS",
+        opt_all_pillars: "All Pillars",
+        opt_academic: "Academic Career / PhD / Maths",
+        opt_quant: "Professional / Quant / Santander",
+        opt_personal: "Aspirations / Languages / Prose",
+        opt_status_all: "To-Do + Completed",
+        opt_status_pending: "To-Do Only",
+        opt_status_done: "Completed Only",
+        modal_add_title: "// ADD STRUCTURAL TASK OR DIRECTIVE",
+        modal_lbl_title: "OBJECTIVE / TASK TITLE:",
+        modal_lbl_micro: "30-SECOND MICRO-ACTION (2% RULE):",
+        modal_lbl_howto: "HOW TO ACHIEVE (TECHNICAL STEP-BY-STEP):",
+        pillarBadges: {
+          ACADEMIC: "ACADEMIC / PHD / MATHS",
+          QUANT: "PROFESSIONAL / QUANT ALM",
+          PERSONAL: "LANGUAGES / PROSE / PERSONAL"
+        },
+        roadmaps: {
+          track1_tag: "// TRACK 01 • ACADEMIC CAREER",
+          track1_title: "JOURNEY TO THE PH.D. (ALM RESEARCH → ANPEC / EESP / IMPA → DOCTORATE)",
+          t1_f1_title: "PHASE 1: UNDERGRADUATE RESEARCH IN ALM (PHD SUPERVISORS)",
+          t1_f1_desc: "Empirical paper on balance sheet management and interest rate risk (IRRBB) in banking using Central Bank (IF.data) datasets.",
+          t1_f1_how: "HOW TO ACHIEVE: Week 1: Fetch time series via Python. Week 2: Generate 2 summary tables in DuckDB. Week 3: Send 1-page draft to both PhD supervisors.",
+          t1_f2_title: "PHASE 2: ANPEC EXAMINATION & MASTER'S (FGV EESP OR IMPA)",
+          t1_f2_desc: "Intensive preparation in Mathematics, Statistics, and Macroeconomics for ANPEC (FGV EESP) or direct application to Applied Mathematics at IMPA.",
+          t1_f2_how: "HOW TO ACHIEVE: Solve 2 timed ANPEC problems daily. For IMPA, master Real Analysis (Elon Lages Lima) backed by strong supervisor letters.",
+          t1_f3_title: "PHASE 3: PH.D. & GLOBAL MACRO RESEARCH (KEYU JIN / VALENTINI)",
+          t1_f3_desc: "Elite academic or professional Doctorate in Economics / Quantitative Finance, combining general equilibrium, financial networks, and global macro (Keyu Jin standard).",
+          t1_f3_how: "HOW TO ACHIEVE: Publish the ALM working paper, secure top marks in graduate maths courses, and build a thesis linking monetary policy and yield curves.",
+          track2_tag: "// TRACK 02 • QUANT ENGINEERING & TREASURY",
+          track2_title: "PYTHON, DUCKDB & YIELD CURVE JOURNEY (SANTANDER ARMOUR → QUANT DESK)",
+          t2_f1_title: "STAGE 1: ELIMINATING FRAGILE EXCEL VIA DUCKDB + PYTHON",
+          t2_f1_desc: "Process corrupted or massive banking datasets directly in analytical SQL via DuckDB and Polars, ensuring operational speed and security at Santander.",
+          t2_f1_how: "HOW TO ACHIEVE: Build a standard pipeline (ingest_clean.py) reading dirty CSV/Parquet files via duckdb.sql() and exporting clean tables in 2 seconds.",
+          t2_f2_title: "STAGE 2: YIELD CURVE ENGINE (ETTJ) & ALM RISK METRICS",
+          t2_f2_desc: "Implement Flat-Forward, Cubic Splines, and Nelson-Siegel-Svensson for DI1 vertices alongside automated DV01, NII, and EVE calculations.",
+          t2_f2_how: "HOW TO ACHIEVE: Use vectorised scipy.optimize + numpy to calibrate (β0, β1, β2, β3, λ1, λ2) against ANBIMA/B3 rates daily.",
+          track3_tag: "// TRACK 03 • RIGOROUS MATHEMATICAL RECONSTRUCTION",
+          track3_title: "FORMAL MATHEMATICS: FROM AXIOMS & FRACTIONS TO IMPA & STOCHASTIC CALCULUS",
+          track4_tag: "// TRACK 04 • CULTURE, LINGUISTICS & EXPRESSION",
+          track4_title: "MANDARIN (漢字 + 注音), KOREAN (한글) & MODERN PROSE (OTHON GARCIA)",
+          t4_f1_title: "1. MANDARIN: HANZI (漢字) & ZHUYIN FUHAO (注音符號 ㄅㄆㄇㄈ)",
+          t4_f1_desc: "Pure phonetics via Bopomofo (preventing Latin Pinyin interference) and structural radical stroke order.",
+          t4_f1_how: "HOW TO ACHIEVE: 10 minutes writing 3 new characters + 5 minutes reading aloud with Zhuyin phonetics.",
+          t4_f2_title: "2. KOREAN: MECHANICAL HANGUL (한글) FLUENCY & SYNTAX",
+          t4_f2_desc: "Automating syllabic Hangul decoding, Batchim (받침) assimilation rules, and structural particles.",
+          t4_f2_how: "HOW TO ACHIEVE: Read 1 short Hangul paragraph daily focusing on chest resonance and vertical jaw spacing.",
+          t4_f3_title: "3. MODERN PROSE COMMUNICATION (OTHON M. GARCIA) & VOICE",
+          t4_f3_desc: "Replace convoluted mental translations with crisp, parallel sentences; land final plosive consonants firmly.",
+          t4_f3_how: "HOW TO ACHIEVE: Study 2 pages of Othon M. Garcia and refactor 1 technical economics/ALM paragraph daily."
+        },
+        emergency: {
+          tag: "// NEURO-EXECUTIVE ENGINEERING",
+          title: "INERTIA DECOUPLER & EXECUTIVE DYSFUNCTION PROTOCOL (2% RULE)",
+          sub: "When you know exactly what must be done but cannot initiate: stop relying on abstract 'willpower'. Trigger a mechanical micro-action below to drop entry friction to zero.",
+          btn_purge: "SENSORY ISOLATION (60s)",
+          col1_title: "1. 30-SECOND PHYSICAL IGNITION (THE 2% RULE)",
+          c1_math_t: "STUCK ON MATHEMATICS:",
+          c1_math_d: "Open the notebook, write today's date, and copy 1 single fraction or axiom. Nothing else.",
+          c1_py_t: "STUCK ON PYTHON / DUCKDB:",
+          c1_py_d: "Open your IDE and type 'import duckdb'. Run that single line to break static inertia.",
+          c1_lang_t: "STUCK ON MANDARIN / KOREAN:",
+          c1_lang_d: "Draw 1 single Hanzi character or read 3 Hangul syllables aloud.",
+          col2_title: "2. ZERO-FRICTION SCRIPTS (COPY & SEND WITHOUT THINKING)",
+          c2_alm_label: "ALM PhD Supervisors:",
+          c2_alm_text: "Dear Professor, I have structured the preliminary BCB data extraction for our ALM study. Could we align on the next steps for 15 minutes this week?",
+          c2_prep_label: "Preply Tutor (Mandarin/Korean):",
+          c2_prep_text: "Hello tutor! I need to reschedule our session this week due to an urgent desk deliverable at the bank. What alternative slots do you have available?",
+          btn_copy: "COPY",
+          col3_title: "3. VOCAL & BIOMECHANICAL CALIBRATION",
+          c3_jaw_t: "VERTICAL PALATE SPACE (4MM):",
+          c3_jaw_d: "Release your molars (4mm vertical gap) before pronouncing high vowels or words like 'absolute' and 'precision'.",
+          c3_chest_t: "CHEST REGISTER ANCHORING:",
+          c3_chest_d: "Support breath from the diaphragm and cap every final plosive (t, k, p, d) cleanly without upward pitch inflection."
+        }
+      },
+
+      zh: {
+        mainTitle: "荒坂集團 // 量化執行長系統 (注音 ㄓㄨˋ ㄧㄣ)",
+        subtitle: "資產負債管理 ALM • IMPA 數理經濟 • DuckDB 數據工程 • 繁體漢字 & 한글",
+        timer_label: "15分鐘微習慣",
+        nav_overview: "01 // 全局總覽、照片、ASCII 與模擬器",
+        nav_econlab: "02 // 宏觀與量化 ALM 實驗室 (4大引擎)",
+        nav_roadmaps: "03 // 博士與量化藍圖 (如何達成協議)",
+        nav_tasks: "04 // 任務與優先級控制中心",
+        nav_emergency: "05 // 破除執行癱瘓 (2% 法則)",
+        kpi_completion: "全局執行完成率 (ㄓˊ ㄒㄧㄥˊ)",
+        kpi_done_word: "已完成",
+        kpi_todo_word: "待辦事項",
+        kpi_critical: "最高優先級任務 (P0 / 關鍵)",
+        kpi_critical_sub: "桑坦德銀行 ALM 防護 • 央行數據論文 • 零摩擦行政",
+        status_online: "● 系統穩定運行",
+        btn_view_queue: "查看隊列 →",
+        kpi_quant: "IMPA 嚴格數學與量化進度",
+        kpi_quant_path: "公理與分數 → 實分析 → 殖利率曲線",
+        btn_protocol: "執行協議 →",
+        kpi_lang: "漢語 (注音符號) • 韓語 (한글) • 散文",
+        kpi_lang_sub: "每日15分鐘微習慣 + 現代散文結構 + 發聲力學",
+        lang_paused_note: "德/法/日語：已暫停",
+        btn_train_15m: "開始15分鐘訓練 →",
+        p1_photo_title: "// 視覺與照片看板 (首頁直接上傳)",
+        p1_photo_sub: "直接在此上傳您的照片、殖利率曲線圖或學術目標圖片",
+        btn_upload_photo: "上傳照片",
+        p1_ascii_title: "// 互動式 ASCII 終端機 (首頁即時編輯)",
+        p1_ascii_sub: "選擇預設模型或直接在此貼上並保存您的 ASCII 藝術",
+        btn_edit_ascii: "編輯 ASCII",
+        btn_save_ascii: "保存 ASCII",
+        btn_cancel: "取消",
+        btn_save: "保存",
+        ascii_status_saved: "● 本地存儲已同步",
+        chart_title: "量化引擎 // SVENSSON 殖利率曲線與 ALM 風險",
+        btn_shock_curve: "模擬利率衝擊 Δr",
+        btn_open_4_engines: "開啟4大引擎 →",
+        pillar1_title: "1. 學術生涯與經濟學博士 (PH.D.)",
+        pillar1_desc: "從與兩位博士導師合作的 ALM 科研起步，掌握實分析 (Elon Lages Lima)，通過 ANPEC/IMPA 考核，邁向國際頂級經濟學博士 (金刻羽 Keyu Jin 標準)。",
+        pillar1_step_label: "當前步驟 (H1)：",
+        pillar1_step_text: "使用巴西央行數據撰寫 ALM/IRRBB 實證論文 + 重建數學公理與代數基礎。",
+        pillar1_how_label: "如何達成 (機械式執行)：",
+        pillar1_how_text: "每天在閱讀深奧理論前先做3道基礎題；每兩週與博士導師進行15分鐘進度同步。",
+        pillar2_title: "2. 職業發展與量化交易台 (QUANT ALM)",
+        pillar2_desc: "在桑坦德銀行 (Santander) 以 Python + DuckDB 取代脆弱的 Excel，建立 ETTJ 利率曲線引擎，確保資金部交易台與量化研究的絕對安全性。",
+        pillar2_step_label: "當前步驟 (H0/H1)：",
+        pillar2_step_text: "透過 SQL/DuckDB 自動化清洗髒數據，並構建 Flat-Forward 與 Svensson 插值模型。",
+        pillar2_how_label: "如何達成 (機械式執行)：",
+        pillar2_how_text: "每週將銀行的一項手動報表轉化為40行的模組化 Python 腳本。",
+        pillar3_title: "3. 個人願景、漢字注音與韓語 (한글)",
+        pillar3_desc: "每日專注於繁體漢字與注音符號 (ㄅㄆㄇㄈ) 及韓語 (한글)，掌握現代散文結構 (Othon M. Garcia)，並解決發聲緊張與執行功能障礙。",
+        pillar3_step_label: "當前步驟 (每日微習慣)：",
+        pillar3_step_text: "15分鐘注音/漢字 + 15分鐘韓語拼讀 + 保持4毫米垂直下顎發聲空間。",
+        pillar3_how_label: "如何達成 (機械式執行)：",
+        pillar3_how_text: "疲勞時絕不學習超過15分鐘；運用2%法則（寫下1個漢字即算打破慣性）。",
+        btn_open_roadmap: "查看完整藍圖 →",
+        btn_open_simulators: "開啟量化模擬器 →",
+        quick_tasks_title: "即時執行任務隊列 (待辦 / 已完成)",
+        quick_tasks_sub: "點擊任何項目的「如何達成」以展開反癱瘓機械步驟。",
+        btn_add_task: "新增任務",
+        btn_view_all: "查看全部",
+        btn_howto: "如何達成",
+        btn_start_15m: "▶ 立即啟動 15 分鐘專注",
+        lbl_micro_action: "2% 微行動：",
+        lbl_howto_header: "// 機械式執行步驟協議：",
+        econlab_title: "宏觀經濟學與量化 ALM 互動實驗室 (4大即時運算引擎)",
+        econlab_sub: "調整下方結構參數以即時模擬銀行資產負債表衝擊 (IRRBB)、泰勒法則貨幣政策、匯率超調模型 (Dornbusch) 與隨機利率過程 (Vasicek/Itô)。",
+        eng1_title: "SVENSSON 殖利率曲線與銀行資產負債衝擊 (ΔEVE / ΔNII)",
+        eng2_title: "泰勒法則 (TAYLOR RULE)、菲利普斯曲線與央行利率路徑",
+        eng3_title: "DORNBUSCH 匯率超調模型與無拋補利率平價 (UIP)",
+        eng4_title: "VASICEK / 伊藤引理 (ITÔ) 隨機短期利率蒙地卡羅模擬",
+        roadmap_main_title: "長期戰略藍圖與機械式執行指南 (如何達成目標)",
+        roadmap_main_sub: "由下而上 (Bottom-Up) 完整拆解：每個目標皆轉化為具體書單、技術工具與每日微習慣。",
+        filter_pillar_label: "生活支柱領域",
+        filter_prio_label: "優先級別",
+        filter_status_label: "執行狀態",
+        opt_all_pillars: "所有支柱領域",
+        opt_academic: "學術生涯 / 博士 / 嚴格數學",
+        opt_quant: "職業發展 / 量化 ALM / 桑坦德",
+        opt_personal: "個人願景 / 漢韓語言 / 現代散文",
+        opt_status_all: "待辦 + 已完成",
+        opt_status_pending: "僅顯示待辦",
+        opt_status_done: "僅顯示已完成",
+        modal_add_title: "// 新增結構化任務或目標",
+        modal_lbl_title: "目標 / 任務名稱：",
+        modal_lbl_micro: "30秒微行動 (2% 啟動法則)：",
+        modal_lbl_howto: "如何達成 (具體技術步驟)：",
+        pillarBadges: {
+          ACADEMIC: "學術 / 博士 / 數理",
+          QUANT: "職業 / 量化 ALM",
+          PERSONAL: "語言 / 散文 / 個人"
+        },
+        roadmaps: {
+          track1_tag: "// 路徑 01 • 學術生涯與博士",
+          track1_title: "邁向經濟學博士之路 (ALM 科研 → ANPEC / EESP / IMPA → PH.D.)",
+          t1_f1_title: "階段 1：與兩位博士導師合作 ALM 科學研究",
+          t1_f1_desc: "利用巴西央行公開數據 (IF.data)，撰寫關於銀行資產負債管理與利率風險 (IRRBB) 的實證研究論文。",
+          t1_f1_how: "如何達成：第1週：用 Python 下載歷史序列。第2週：在 DuckDB 生成2張統計表。第3週：發送1頁初稿給導師。",
+          t1_f2_title: "階段 2：ANPEC 聯考與碩士申請 (FGV EESP 或 IMPA)",
+          t1_f2_desc: "高強度準備 ANPEC 數學、統計與宏觀經濟學，或直接申請 IMPA 應用數學 / 數理經濟碩士。",
+          t1_f2_how: "如何達成：每天計時解答2道 ANPEC 歷屆真題；研讀 Elon Lages Lima《實分析》並爭取導師強推信。",
+          t1_f3_title: "階段 3：國際經濟學博士與全球宏觀研究 (KEYU JIN 標竿)",
+          t1_f3_desc: "攻讀頂級經濟學或量化金融博士，結合一般均衡模型、金融網絡與全球宏觀分析。",
+          t1_f3_how: "如何達成：發表 ALM 工作論文，在碩士數理課程取得滿分，建立貨幣政策與利率曲線博士論文。",
+          track2_tag: "// 路徑 02 • 量化工程與銀行資金部",
+          track2_title: "PYTHON、DUCKDB 與殖利率曲線工程 (桑坦德防護 → 量化交易台)",
+          t2_f1_title: "步驟 1：以 DUCKDB + PYTHON 徹底淘汰脆弱的 EXCEL",
+          t2_f1_desc: "透過 DuckDB 與 Polars 直接以分析型 SQL 處理龐大或損壞的數據庫，保障銀行工作安全。",
+          t2_f1_how: "如何達成：建立標準腳本 (ingest_clean.py)，用 duckdb.sql() 在2秒內完成數據清洗與輸出。",
+          t2_f2_title: "步驟 2：殖利率曲線引擎 (ETTJ) 與 ALM 風險指標",
+          t2_f2_desc: "用 Python 從零實現 Flat-Forward、三次樣條與 Svensson 模型，自動計算 DV01、NII 與 EVE。",
+          t2_f2_how: "如何達成：使用向量化 scipy.optimize 與 numpy 每日校準 ANBIMA/B3 利率曲線參數。",
+          track3_tag: "// 路徑 03 • 嚴格數學重建計畫",
+          track3_title: "形式數學：從基礎公理、分數到 IMPA 實分析與隨機微積分",
+          track4_tag: "// 路徑 04 • 文化、語言學與精準表達",
+          track4_title: "繁體中文 (漢字 + 注音 ㄅㄆㄇㄈ)、韓語 (한글) 與現代散文",
+          t4_f1_title: "1. 漢語：繁體漢字與注音符號 (ㄅㄆㄇㄈ)",
+          t4_f1_desc: "透過注音符號掌握純正發音（避免羅馬拼音干擾），並按部首筆順書寫漢字。",
+          t4_f1_how: "如何達成：每日10分鐘手寫3個新漢字 + 5分鐘使用注音大聲朗讀。",
+          t4_f2_title: "2. 韓語：韓文 (한글) 機械式拼讀與語法結構",
+          t4_f2_desc: "自動化解碼韓語音節、掌握收音 (받침) 連音規則與核心助詞。",
+          t4_f2_how: "如何達成：每日朗讀1段韓語短文，保持胸腔共鳴與下顎放鬆。",
+          t4_f3_title: "3. 現代散文寫作 (OTHON M. GARCIA) 與發聲控制",
+          t4_f3_desc: "消除母語直譯的冗長從句，建立清晰平行的現代散文結構；穩定控制字尾塞音。",
+          t4_f3_how: "如何達成：每日研讀2頁《現代散文傳播》並重構1段經濟學或 ALM 技術文字。"
+        },
+        emergency: {
+          tag: "// 神經執行功能工程",
+          title: "慣性解耦器與執行癱瘓急救協議 (2% 法則)",
+          sub: "當您清楚知道該做什麼卻無法坐下開始時：停止依賴抽象的「意志力」。立即點擊下方機械式微指令，將啟動阻力降至零。",
+          btn_purge: "感官隔離重置 (60秒)",
+          col1_title: "1. 30秒物理點火啟動 (2% 法則)",
+          c1_math_t: "數學卡關時：",
+          c1_math_d: "打開筆記本，只寫下今天日期並抄寫 1 個分數或公理，即可停止。",
+          c1_py_t: "PYTHON / DUCKDB 卡關時：",
+          c1_py_d: "打開編輯器，僅輸入 'import duckdb' 並執行該行，打破大腦靜止狀態。",
+          c1_lang_t: "中文 / 韓文卡關時：",
+          c1_lang_d: "手寫 1 個漢字，或大聲讀出 3 個韓語音節 (한글)。",
+          col2_title: "2. 零摩擦行政訊息模板 (一鍵複製並發送)",
+          c2_alm_label: "發送給 ALM 博士導師：",
+          c2_alm_text: "教授您好！我已完成央行 ALM 數據的初步提取架構，請問本週是否有15分鐘可以與您同步下一步分析方向？",
+          c2_prep_label: "發送給 Preply 語言老師：",
+          c2_prep_text: "老師您好！因銀行臨時有緊急量化任務，我需要調整本週的課程時間，請問您有哪些空檔可以補課？",
+          btn_copy: "複製訊息",
+          col3_title: "3. 發聲生物力學與下顎校準",
+          c3_jaw_t: "垂直口腔空間 (4毫米)：",
+          c3_jaw_d: "發閉口元音或長單詞前，先放鬆後臼齒（保持4毫米垂直間距），消除喉部擠壓。",
+          c3_chest_t: "胸腔共鳴錨定：",
+          c3_chest_d: "保持腹式呼吸支撐，清晰收尾每個塞音 (t, k, p, d)，句尾絕不升高音調。"
+        }
+      },
+
+      ko: {
+        mainTitle: "아라사카 // 퀀트 및 학술 통합 실행 시스템",
+        subtitle: "ALM 자산부채관리 • IMPA 수리경제학 • DuckDB 파이썬 • 繁體注音 & 한글",
+        timer_label: "15분 집중 프로토콜",
+        nav_overview: "01 // 종합 대시보드, 사진, ASCII 및 시뮬레이터",
+        nav_econlab: "02 // 거시경제 및 퀀트 ALM 실험실 (4대 엔진)",
+        nav_roadmaps: "03 // 박사 및 퀀트 로드맵 (달성 방법 프로토콜)",
+        nav_tasks: "04 // 작업 및 우선순위 제어 센터",
+        nav_emergency: "05 // 실행 마비 해제 (2% 법칙)",
+        kpi_completion: "전체 실행 완료율",
+        kpi_done_word: "완료됨",
+        kpi_todo_word: "할 일",
+        kpi_critical: "최우선 핵심 과제 (P0 / 긴급)",
+        kpi_critical_sub: "산탄데르 은행 ALM 자동화 • 박사 교수진 공동연구 • 무마찰 행정",
+        status_online: "● 시스템 정상 가동",
+        btn_view_queue: "대기열 보기 →",
+        kpi_quant: "IMPA 수학 및 퀀트 스택",
+        kpi_quant_path: "공리 및 분수 → 실해석학 → 금리곡선",
+        btn_protocol: "프로토콜 →",
+        kpi_lang: "한국어(한글) • 중국어(注音) • 현대 산문",
+        kpi_lang_sub: "매일 15분 원자적 블록 + 문장 구조화 + 발성 교정",
+        lang_paused_note: "독일어/불어/일어: 일시중지",
+        btn_train_15m: "15분 훈련 시작 →",
+        p1_photo_title: "// 비주얼 & 사진 보드 (첫 페이지 직접 업로드)",
+        p1_photo_sub: "사진, 수익률 곡선 차트 또는 목표 이미지를 첫 화면에 바로 업로드하세요",
+        btn_upload_photo: "사진 업로드",
+        p1_ascii_title: "// 인터랙티브 ASCII 터미널 (첫 페이지 편집)",
+        p1_ascii_sub: "프리셋을 선택하거나 나만의 ASCII 아트를 바로 붙여넣고 저장하세요",
+        btn_edit_ascii: "편집",
+        btn_save_ascii: "ASCII 저장",
+        btn_cancel: "취소",
+        btn_save: "저장",
+        ascii_status_saved: "● 로컬 저장소 동기화 완료",
+        chart_title: "퀀트 엔진 // SVENSSON 금리곡선(ETTJ) 및 ALM 리스크",
+        btn_shock_curve: "금리 충격 Δr",
+        btn_open_4_engines: "4대 엔진 열기 →",
+        pillar1_title: "1. 학술 커리어 및 경제학 박사 (PH.D.)",
+        pillar1_desc: "두 명의 박사 지도교수와 함께하는 ALM 학부 연구부터 실해석학(Elon Lages Lima) 마스터, ANPEC/IMPA 합격 및 글로벌 경제학 박사(Keyu Jin 수준) 과정까지.",
+        pillar1_step_label: "현재 단계 (H1):",
+        pillar1_step_text: "중앙은행 데이터를 활용한 ALM/IRRBB 실증 논문 작성 + 수학 공리 및 기초 재구축.",
+        pillar1_how_label: "달성 방법 (기계적 실행):",
+        pillar1_how_text: "어려운 이론을 읽기 전 매일 기초 문제 3개 풀기; 격주로 지도교수진과 15분 진행 상황 공유.",
+        pillar2_title: "2. 프로페셔널 퀀트 & ALM 데스크",
+        pillar2_desc: "산탄데르(Santander) 은행에서 불안정한 엑셀을 Python + DuckDB 엔진으로 대체. 금리 기간구조(ETTJ) 모델링 및 트레이딩/퀀트 데스크 전문성 확보.",
+        pillar2_step_label: "현재 단계 (H0/H1):",
+        pillar2_step_text: "SQL/DuckDB로 비정형 데이터 처리를 자동화하고 Flat-Forward 및 Svensson 보간법 구축.",
+        pillar2_how_label: "달성 방법 (기계적 실행):",
+        pillar2_how_text: "매주 은행의 수동 엑셀 작업 1개를 40줄 분량의 모듈형 파이썬 스크립트로 변환.",
+        pillar3_title: "3. 개인 목표, 한국어(한글) & 중국어(注音)",
+        pillar3_desc: "매일 15분 중국어(한자+주음부호) 및 한국어(한글) 집중 학습, Othon M. Garcia의 명료한 산문 구조 습득, 발성 및 실행 기능 최적화.",
+        pillar3_step_label: "현재 단계 (일일 루틴):",
+        pillar3_step_text: "주음/한자 15분 + 한글 소리내어 읽기 15분 + 턱관절 수직 공간(4mm) 유지.",
+        pillar3_how_label: "달성 방법 (기계적 실행):",
+        pillar3_how_text: "피곤할 때는 절대 15분 이상 공부하지 않기; 2% 법칙 적용(글자 1개만 써도 관성 타파).",
+        btn_open_roadmap: "전체 로드맵 열기 →",
+        btn_open_simulators: "퀀트 시뮬레이터 열기 →",
+        quick_tasks_title: "즉시 실행 대기열 (할 일 / 완료됨)",
+        quick_tasks_sub: "항목의 '달성 방법'을 클릭하면 실행 마비를 깨는 기계적 프로토콜이 열립니다.",
+        btn_add_task: "새 작업 추가",
+        btn_view_all: "전체 보기",
+        btn_howto: "달성 방법",
+        btn_start_15m: "▶ 지금 15분 블록 시작",
+        lbl_micro_action: "2% 미세 행동:",
+        lbl_howto_header: "// 기계적 실행 프로토콜:",
+        econlab_title: "인터랙티브 거시경제 및 퀀트 ALM 실험실 (4대 실시간 엔진)",
+        econlab_sub: "아래 슬라이더를 조작하여 은행 자산부채 충격(IRRBB), 테일러 준칙 통화정책, 환율 오버슈팅(Dornbusch) 및 확률미분방정식(Vasicek/Itô)을 시뮬레이션하세요.",
+        eng1_title: "SVENSSON 금리 기간구조(ETTJ) 및 ALM 밸런스시트 충격 (ΔEVE / ΔNII)",
+        eng2_title: "테일러 준칙(TAYLOR RULE), 필립스 곡선 및 기준금리 경로",
+        eng3_title: "DORNBUSCH 환율 오버슈팅, 유위험 이자율평형(UIP) 및 스왑 베이시스",
+        eng4_title: "VASICEK / 이토(ITÔ) 확률적 단기금리 몬테카를로 시뮬레이션",
+        roadmap_main_title: "장기 마스터플랜 및 기계적 실행 프로토콜 ('달성 방법')",
+        roadmap_main_sub: "완전한 상향식(Bottom-Up) 설계: 모든 목표를 정확한 참고문헌, 기술 도구 및 일일 미세 습관으로 분해했습니다.",
+        filter_pillar_label: "핵심 영역",
+        filter_prio_label: "우선순위",
+        filter_status_label: "상태",
+        opt_all_pillars: "모든 영역",
+        opt_academic: "학술 커리어 / 박사 / 수학",
+        opt_quant: "프로페셔널 / 퀀트 ALM / 산탄데르",
+        opt_personal: "개인 목표 / 한·중 어학 / 산문",
+        opt_status_all: "할 일 + 완료됨",
+        opt_status_pending: "할 일만 보기",
+        opt_status_done: "완료된 항목만",
+        modal_add_title: "// 새로운 구조적 작업 또는 목표 추가",
+        modal_lbl_title: "목표 / 작업 제목:",
+        modal_lbl_micro: "30초 미세 행동 (2% 시작 법칙):",
+        modal_lbl_howto: "달성 방법 (기술적 단계별 절차):",
+        pillarBadges: {
+          ACADEMIC: "학술 / 박사 / 수학",
+          QUANT: "프로페셔널 / 퀀트 ALM",
+          PERSONAL: "어학 / 산문 / 개인"
+        },
+        roadmaps: {
+          track1_tag: "// 트랙 01 • 학술 커리어 및 박사",
+          track1_title: "경제학 박사(PH.D.) 여정 (ALM 학부연구 → ANPEC / EESP / IMPA → 박사)",
+          t1_f1_title: "1단계: 두 명의 박사 교수진과 ALM 학부 연구 진행",
+          t1_f1_desc: "중앙은행(IF.data) 공공 데이터를 활용하여 은행 자산부채관리 및 금리 리스크(IRRBB) 실증 논문 작성.",
+          t1_f1_how: "달성 방법: 1주차: 파이썬으로 시계열 추출. 2주차: DuckDB로 요약표 2개 생성. 3주차: 교수진에게 1페이지 초안 전송.",
+          t1_f2_title: "2단계: ANPEC 시험 및 석사 진학 (FGV EESP 또는 IMPA)",
+          t1_f2_desc: "ANPEC 수학, 통계학, 거시경제학 집중 대비 또는 IMPA 응용수학/수리경제학 석사 지원.",
+          t1_f2_how: "달성 방법: 매일 ANPEC 기출문제 2개 시간 재서 풀기. IMPA 대비 Elon Lages Lima의 실해석학 증명 연습.",
+          t1_f3_title: "3단계: 글로벌 경제학 박사 및 매크로 리서치 (KEYU JIN 롤모델)",
+          t1_f3_desc: "일반균형이론, 금융 네트워크 및 글로벌 거시경제를 결합한 최상위 경제학/금융공학 박사 학위 취득.",
+          t1_f3_how: "달성 방법: ALM 워킹페이퍼 출판, 석사 수학 과목 만점 확보 및 통화정책·금리곡선 박사 연구계획서 완성.",
+          track2_tag: "// 트랙 02 • 퀀트 엔지니어링 및 트레이딩 데스크",
+          track2_title: "PYTHON, DUCKDB 및 금리곡선 여정 (산탄데르 자동화 → 퀀트 데스크)",
+          t2_f1_title: "1단계: DUCKDB + PYTHON으로 불안정한 엑셀 완전 대체",
+          t2_f1_desc: "손상되거나 거대한 은행 데이터를 DuckDB와 Polars SQL로 즉시 처리하여 산탄데르에서의 업무 경쟁력 확보.",
+          t2_f1_how: "달성 방법: duckdb.sql()로 더티 CSV/Parquet를 2초 만에 정제하는 표준 파이프라인(ingest_clean.py) 구축.",
+          t2_f2_title: "2단계: 금리 기간구조(ETTJ) 엔진 및 ALM 리스크 지표 자동화",
+          t2_f2_desc: "Flat-Forward, Cubic Splines 및 Svensson 모델을 파이썬으로 구현하고 DV01, NII, EVE 자동 계산.",
+          t2_f2_how: "달성 방법: scipy.optimize와 벡터화된 numpy를 사용해 매일 ANBIMA/B3 금리 커브 파라미터 캘리브레이션.",
+          track3_tag: "// 트랙 03 • 엄밀한 수학 기초 재구축",
+          track3_title: "형식 수학: 기초 공리와 분수부터 IMPA 실해석학 및 확률미적분학까지",
+          track4_tag: "// 트랙 04 • 문화, 어학 및 정교한 문장 표현",
+          track4_title: "중국어(漢字 + 注音 ㄅㄆㄇㄈ), 한국어(한글) 및 현대 산문(OTHON GARCIA)",
+          t4_f1_title: "1. 중국어: 번체 한자(漢字) 및 주음부호(注音符號 ㄅㄆㄇㄈ)",
+          t4_f1_desc: "로마자 병음의 간섭 없이 주음부호로 정확한 발음을 익히고 부수와 필순에 따라 한자 학습.",
+          t4_f1_how: "달성 방법: 매일 10분간 새 한자 3개 쓰기 + 5분간 주음부호로 소리내어 읽기.",
+          t4_f2_title: "2. 한국어: 한글(한글) 기계적 독해 유창성 및 문법 구조",
+          t4_f2_desc: "한글 음절 디코딩 자동화, 받침(Batchim) 음운 변동 규칙 및 핵심 조사 체화.",
+          t4_f2_how: "달성 방법: 흉성 공명과 턱관절 이완을 유지하며 매일 짧은 한글 문단 1개 소리내어 읽기.",
+          t4_f3_title: "3. 현대 산문 커뮤니케이션(OTHON M. GARCIA) 및 발성 역학",
+          t4_f3_desc: "모국어 직역투의 복잡한 복문을 피하고 명료하고 균형 잡힌 문장 구사; 어말 파열음을 정확히 발음.",
+          t4_f3_how: "달성 방법: 매일 Othon M. Garcia 저서 2페이지 분석 및 경제/ALM 기술 문단 1개 교정."
+        },
+        emergency: {
+          tag: "// 신경-실행 기능 엔지니어링",
+          title: "관성 디커플러 및 실행 기능 마비 해제 프로토콜 (2% 법칙)",
+          sub: "무엇을 해야 할지 정확히 알면서도 몸이 움직이지 않을 때: 추상적인 '의지력'에 의존하지 마세요. 아래의 기계적 미세 행동을 실행하여 진입 마찰을 0으로 만듭니다.",
+          btn_purge: "감각 차단 리셋 (60초)",
+          col1_title: "1. 30초 물리적 점화 (2% 법칙)",
+          c1_math_t: "수학 공부가 막힐 때:",
+          c1_math_d: "노트를 펴고 오늘 날짜만 적은 뒤 분수나 공리 단 1개만 베껴 쓰세요.",
+          c1_py_t: "PYTHON / DUCKDB가 막힐 때:",
+          c1_py_d: "에디터를 열고 'import duckdb' 한 줄만 타이핑하여 실행하세요.",
+          c1_lang_t: "중국어 / 한국어가 막힐 때:",
+          c1_lang_d: "한자 1글자만 그리거나 한글 3음절만 소리내어 읽으세요.",
+          col2_title: "2. 무마찰 메시지 템플릿 (생각하지 말고 복사해서 바로 전송)",
+          c2_alm_label: "ALM 박사 지도교수님께:",
+          c2_alm_text: "교수님, 안녕하십니까! ALM 연구를 위한 중앙은행(BCB) 데이터 1차 추출 구조를 잡았습니다. 이번 주 중 15분 정도 다음 단계를 논의할 수 있을지 여쭙습니다.",
+          c2_prep_label: "Preply 어학 튜터에게:",
+          c2_prep_text: "선생님 안녕하세요! 은행 데스크의 긴급한 업무로 인해 이번 주 수업 일정을 변경해야 할 것 같습니다. 가능한 다른 시간대를 알려주시면 감사하겠습니다!",
+          btn_copy: "복사하기",
+          col3_title: "3. 발성 생체역학 및 턱관절 캘리브레이션",
+          c3_jaw_t: "입천장 수직 공간 확보 (4mm):",
+          c3_jaw_d: "고모음이나 'absolute', 'precision' 같은 단어를 발음하기 전에 어금니 사이를 4mm 벌려 후두 긴장을 푸세요.",
+          c3_chest_t: "흉성 레지스터 앵커링:",
+          c3_chest_d: "복식 호흡으로 소리를 지지하고 문장 끝의 음정을 올리지 않으면서 어말 파열음(t, k, p, d)을 단단히 맺으세요."
+        }
+      }
+    };
+
+    /* --------------------------------------------------------------------------
+       2. MULTILINGUAL SEED TASKS & 7 MATH CURRICULUM MODULES
+       -------------------------------------------------------------------------- */
+    const DEFAULT_TASKS_MULTILINGUAL = [
+      {
+        id: "t-1",
+        pillar: "QUANT",
+        priority: "P0",
+        done: false,
+        i18n: {
+          pt: {
+            title: "Blindagem Santander: Motor de Curva de Juros (ETTJ) em Python + DuckDB",
+            micro: "Abrir o VS Code, criar 'ettj_engine.py' e importar duckdb e numpy.",
+            howTo: "1. Extrair base bruta de taxas DI/Swap em Parquet/CSV.\n2. Usar DuckDB para limpar vértices corrompidos em SQL puro.\n3. Implementar interpolação Flat-Forward (252 dias úteis) e calibrar parâmetros Svensson.\n4. Substituir 1 planilha crítica da mesa por este script automatizado."
+          },
+          en: {
+            title: "Santander Desk Armour: Yield Curve Engine (ETTJ) in Python + DuckDB",
+            micro: "Open VS Code, create 'ettj_engine.py' and import duckdb and numpy.",
+            howTo: "1. Extract raw DI/Swap rate datasets in Parquet/CSV.\n2. Use DuckDB to clean corrupted vertices in pure analytical SQL.\n3. Implement Flat-Forward (252 business days) interpolation and calibrate Svensson parameters.\n4. Replace 1 fragile desk spreadsheet with this automated script."
+          },
+          zh: {
+            title: "桑坦德銀行防護：以 Python + DuckDB 建立殖利率曲線 (ETTJ) 引擎",
+            micro: "打開 VS Code，建立 'ettj_engine.py' 並輸入 import duckdb, numpy。",
+            howTo: "1. 提取 Parquet/CSV 格式的 DI/Swap 原始利率數據。\n2. 使用 DuckDB 純 SQL 語法清洗異常頂點數據。\n3. 實現 Flat-Forward (252個交易日) 插值與 Svensson 參數校準。\n4. 用此自動化腳本替換交易台的一份關鍵 Excel 報表。"
+          },
+          ko: {
+            title: "산탄데르 은행 자동화: Python + DuckDB 기반 금리 기간구조(ETTJ) 엔진 구축",
+            micro: "VS Code를 열고 'ettj_engine.py'를 생성한 뒤 duckdb와 numpy를 임포트하기.",
+            howTo: "1. DI/Swap 금리 원시 데이터를 Parquet/CSV로 추출.\n2. DuckDB 순수 SQL을 사용해 손상된 만기 정점 데이터 정제.\n3. Flat-Forward(252 영업일) 보간법 및 Svensson 파라미터 캘리브레이션 구현.\n4. 데스크의 핵심 엑셀 시트 1개를 이 자동화 스크립트로 대체."
+          }
+        }
+      },
+      {
+        id: "t-2",
+        pillar: "ACADEMIC",
+        priority: "P0",
+        done: false,
+        i18n: {
+          pt: {
+            title: "Iniciação Científica em ALM com os 2 Professores Doutores (USP/Insper)",
+            micro: "Enviar mensagem curta de alinhamento para os orientadores.",
+            howTo: "1. Baixar dados públicos de balanço bancário (IF.data do Banco Central).\n2. Estruturar painel relacionando sensibilidade de NII/EVE a choques na Selic.\n3. Redigir 2 páginas da seção de Metodologia e Dados antes da Introdução."
+          },
+          en: {
+            title: "Undergraduate Research in ALM with both PhD Supervisors (USP/Insper)",
+            micro: "Send a 2-line alignment message to your supervisors.",
+            howTo: "1. Download public banking balance sheet data (Central Bank IF.data).\n2. Structure panel linking NII/EVE sensitivity to Selic interest rate shocks.\n3. Draft 2 pages of the Methodology & Data section before writing the Introduction."
+          },
+          zh: {
+            title: "與兩位博士導師 (USP/Insper) 推進資產負債管理 (ALM) 科研論文",
+            micro: "複製並發送簡短的進度對齊訊息給指導教授。",
+            howTo: "1. 下載巴西央行公開的銀行資產負債表數據 (IF.data)。\n2. 建立面板數據，分析 NII/EVE 對基準利率衝擊的敏感度。\n3. 先撰寫2頁「數據與研究方法」，暫時不要糾結於引言。"
+          },
+          ko: {
+            title: "두 명의 박사 지도교수진(USP/Insper)과 ALM 학부 공동연구 진행",
+            micro: "지도교수님께 짧은 진행 상황 공유 메시지 보내기.",
+            howTo: "1. 브라질 중앙은행(IF.data) 은행 대차대조표 공공 데이터 다운로드.\n2. 기준금리 충격에 대한 NII/EVE 민감도 패널 데이터 구축.\n3. 서론에 매달리지 말고 '데이터 및 방법론' 섹션 2페이지를 먼저 작성."
+          }
+        }
+      },
+      {
+        id: "t-3",
+        pillar: "ACADEMIC",
+        priority: "P1",
+        done: false,
+        i18n: {
+          pt: {
+            title: "Reconstrução Matemática: Dos Axiomas e Frações até Geometria Analítica",
+            micro: "Resolver apenas 2 exercícios de manipulação algébrica/frações no papel.",
+            howTo: "1. Revisar propriedades de corpos ordenados, potências e frações algébricas (Iezzi).\n2. Dominar vetores, retas e planos em R² e R³ (Paulo Boulos).\n3. Fazer 3 exercícios fáceis todos os dias antes de ler qualquer teorema abstrato."
+          },
+          en: {
+            title: "Mathematical Reconstruction: From Axioms & Fractions to Analytic Geometry",
+            micro: "Solve just 2 algebraic fraction exercises on paper.",
+            howTo: "1. Master ordered field axioms, exponents, and algebraic fractions (Iezzi).\n2. Master vectors, lines, and planes in R² and R³ (Paulo Boulos).\n3. Complete 3 foundational problems daily before reading abstract theorems."
+          },
+          zh: {
+            title: "數學基礎重建：從公理、代數分式到解析幾何",
+            micro: "在紙上只演算 2 道代數分式化簡題。",
+            howTo: "1. 徹底複習有序域公理、指數律與代數分式運算 (Iezzi)。\n2. 掌握 R² 與 R³ 空間中的向量、直線與平面方程 (Paulo Boulos)。\n3. 每天閱讀抽象定理前，先完成 3 道基礎計算題。"
+          },
+          ko: {
+            title: "수학 기초 재구축: 공리와 대수 분수부터 해석기하학까지",
+            micro: "종이에 대수 분수 문제 단 2개만 풀기.",
+            howTo: "1. 순서체 공리, 지수법칙 및 대수 분수 연산 완벽 복습 (Iezzi).\n2. R² 및 R³ 공간의 벡터, 직선, 평면 방정식 마스터 (Paulo Boulos).\n3. 추상적인 정리를 읽기 전 매일 기초 문제 3개씩 풀기."
+          }
+        }
+      },
+      {
+        id: "t-4",
+        pillar: "PERSONAL",
+        priority: "P1",
+        done: false,
+        i18n: {
+          pt: {
+            title: "Rotina Diária de Idiomas: 15m Chinês (Hanzi + Zhuyin ㄅㄆㄇㄈ) & 15m Coreano (Hangul 한글)",
+            micro: "Desenhar 1 único Hanzi e ler 1 linha em Hangul em voz alta.",
+            howTo: "1. Congelar totalmente Alemão, Francês e Japonês para eliminar dispersão.\n2. Usar o timer de 15 minutos: escrever caracteres associando o som exclusivamente pelo Zhuyin Fuhao.\n3. No Coreano, treinar leitura mecânica de blocos silábicos mantendo a mandíbula relaxada."
+          },
+          en: {
+            title: "Daily Language Routine: 15m Mandarin (Hanzi + Zhuyin ㄅㄆㄇㄈ) & 15m Korean (Hangul 한글)",
+            micro: "Draw 1 single Hanzi character and read 1 line of Hangul aloud.",
+            howTo: "1. Freeze German, French, and Japanese completely to eliminate cognitive dispersion.\n2. Use the 15-minute timer: write characters linking sound exclusively via Zhuyin Fuhao.\n3. For Korean, practise mechanical syllabic reading while keeping the jaw relaxed."
+          },
+          zh: {
+            title: "每日語言微習慣：15分鐘繁體中文 (漢字 + 注音 ㄅㄆㄇㄈ) 與 15分鐘韓語 (한글)",
+            micro: "手寫 1 個漢字並大聲朗讀 1 行韓語 (한글)。",
+            howTo: "1. 暫停德語、法語與日語，消除多語種注意力分散。\n2. 啟動頂部 15 分鐘計時器：練習漢字筆順並完全以注音符號標音。\n3. 韓語專注於音節拼讀流暢度與收音規則，保持下顎放鬆。"
+          },
+          ko: {
+            title: "일일 어학 루틴: 중국어(한자+주음 ㄅㄆㄇㄈ) 15분 & 한국어(한글) 15분",
+            micro: "한자 1글자를 쓰고 한글 1줄을 소리내어 읽기.",
+            howTo: "1. 인지적 분산을 막기 위해 독일어, 프랑스어, 일본어는 완전히 보류.\n2. 상단 15분 타이머를 켜고 주음부호(Bopomofo)로만 발음을 연결하여 한자 쓰기.\n3. 한국어는 턱관절 긴장을 풀고 음절 블록을 기계적으로 빠르게 소리내어 읽기."
+          }
+        }
+      },
+      {
+        id: "t-5",
+        pillar: "ACADEMIC",
+        priority: "P2",
+        done: false,
+        i18n: {
+          pt: {
+            title: "Preparação Estruturada ANPEC (FGV EESP) & Análise Real (Nível IMPA)",
+            micro: "Ler a definição formal de limite (ε-δ) no livro do Elon Lages Lima.",
+            howTo: "1. Consolidar Álgebra Linear (autovalores, SVD, formas quadráticas) e Cálculo Multivariado (Hessiana, Lagrange).\n2. Estudar Curso de Análise Vol. 1 (Elon Lages Lima) demonstrando 1 teorema por sessão.\n3. Resolver provas antigas de Matemática e Macroeconomia da ANPEC."
+          },
+          en: {
+            title: "Structured ANPEC Prep (FGV EESP) & Real Analysis (IMPA Standard)",
+            micro: "Read the formal (ε-δ) limit definition in Elon Lages Lima's book.",
+            howTo: "1. Consolidate Linear Algebra (eigenvalues, SVD, quadratic forms) and Multivariable Calculus (Hessians, Lagrange).\n2. Study Curso de Análise Vol. 1 (Elon Lages Lima), proving 1 theorem per session.\n3. Solve past ANPEC Mathematics and Macroeconomics papers."
+          },
+          zh: {
+            title: "ANPEC 碩士聯考 (FGV EESP) 與 IMPA 實分析嚴格訓練",
+            micro: "閱讀 Elon Lages Lima《實分析》中極限的 (ε-δ) 嚴格定義。",
+            howTo: "1. 鞏固線性代數（特徵值、奇異值分解 SVD、二次型）與多變量微積分（黑塞矩陣、拉格朗日乘數）。\n2. 研讀《分析學教程 第一卷》，每次學習親手證明 1 個定理。\n3. 演練 ANPEC 歷屆數學與宏觀經濟學試題。"
+          },
+          ko: {
+            title: "ANPEC 대학원 시험(FGV EESP) 및 IMPA 수준 실해석학 체계적 대비",
+            micro: "Elon Lages Lima 저서에서 극한의 엄밀한 (ε-δ) 정의 읽기.",
+            howTo: "1. 선형대수학(고유값, SVD, 이차형식) 및 다변수 미적분학(헤시안, 라그랑주 승수법) 공고화.\n2. Elon Lages Lima의 실해석학 1권을 공부하며 세션당 정리 1개씩 직접 증명.\n3. ANPEC 수학 및 거시경제학 기출문제 풀이."
+          }
+        }
+      },
+      {
+        id: "t-6",
+        pillar: "PERSONAL",
+        priority: "P2",
+        done: false,
+        i18n: {
+          pt: {
+            title: "Comunicação em Prosa Moderna (Othon M. Garcia) & Visão Macro (Keyu Jin)",
+            micro: "Ler 1 página de Othon M. Garcia sublinhando conectivos de transição.",
+            howTo: "1. Eliminar vícios de subordinação excessiva ao escrever em português e inglês.\n2. Ler relatórios de research macro (estilo Marina Valentini / Vinicius Moreira / Keyu Jin) mapeando o vocabulário técnico.\n3. Treinar leitura em voz alta com pausas sintáticas e consoantes finais firmes."
+          },
+          en: {
+            title: "Modern Prose Expression (Othon M. Garcia) & Global Macro (Keyu Jin)",
+            micro: "Read 1 page of Othon M. Garcia underlining syntactic transition markers.",
+            howTo: "1. Eliminate excessive clause subordination when writing in Portuguese and English.\n2. Read macro research papers (Marina Valentini / Vinicius Moreira / Keyu Jin style) mapping technical phrasing.\n3. Practise reading aloud with syntactic micro-pauses and firm terminal plosives."
+          },
+          zh: {
+            title: "現代散文精準表達 (Othon M. Garcia) 與全球宏觀視野 (金刻羽 Keyu Jin)",
+            micro: "閱讀 1 頁《現代散文傳播》，標註句法轉折連接詞。",
+            howTo: "1. 消除葡語和英語寫作中過度嵌套的從句習慣。\n2. 研讀頂級宏觀研究報告（Marina Valentini / Vinicius Moreira / Keyu Jin 風格），建立專業詞庫。\n3. 進行朗讀訓練，在句法樞紐處微停頓並清晰發出字尾塞音。"
+          },
+          ko: {
+            title: "현대 산문 작문(Othon M. Garcia) 및 글로벌 매크로 분석(Keyu Jin)",
+            micro: "Othon M. Garcia 저서 1페이지를 읽으며 접속사와 구문 전환 표시하기.",
+            howTo: "1. 포르투갈어와 영어 작문 시 과도한 종속절 중첩 습관 제거.\n2. 매크로 리서치 보고서(Marina Valentini / Vinicius Moreira / Keyu Jin 스타일)를 읽으며 전문 어휘 정리.\n3. 구문 경계에서의 미세 휴지와 단단한 어말 자음 발성을 적용하여 낭독 훈련."
+          }
+        }
+      },
+      {
+        id: "t-7",
+        pillar: "PERSONAL",
+        priority: "P0",
+        done: true,
+        i18n: {
+          pt: {
+            title: "Remarcar aula de Chinês no Preply (Desbloqueio de Fricção)",
+            micro: "Enviar mensagem pré-pronta de 1 linha.",
+            howTo: "Ação imediata concluída para destravar a inércia executiva."
+          },
+          en: {
+            title: "Reschedule Mandarin lesson on Preply (Friction Unblocked)",
+            micro: "Send 1-line pre-written template.",
+            howTo: "Immediate action completed to break executive paralysis."
+          },
+          zh: {
+            title: "在 Preply 重新安排中文課程 (已破除行政摩擦)",
+            micro: "發送預先寫好的單行模板訊息。",
+            howTo: "已完成即時行動，成功解除執行癱瘓。"
+          },
+          ko: {
+            title: "Preply 중국어 수업 일정 변경 완료 (초기 마찰 해소)",
+            micro: "미리 작성된 1줄 템플릿 메시지 전송.",
+            howTo: "실행 마비를 깨기 위한 즉각적 조치 완료."
+          }
+        }
+      }
+    ];
+
+    const DEFAULT_MATH_MULTILINGUAL = [
+      {
+        id: "m1",
+        done: true,
+        i18n: {
+          pt: { title: "01. Aritmética Axiomática, Frações Algébricas & Funções Elementares", ref: "Gelson Iezzi (Vol. 1-3) • Base Axiomática Sólida" },
+          en: { title: "01. Axiomatic Arithmetic, Algebraic Fractions & Elementary Functions", ref: "Gelson Iezzi (Vol. 1-3) • Solid Axiomatic Foundation" },
+          zh: { title: "01. 公理化算術、代數分式與初等函數", ref: "Gelson Iezzi (第1-3卷) • 嚴格基礎重建" },
+          ko: { title: "01. 공리적 산술, 대수 분수 및 초등함수", ref: "Gelson Iezzi (Vol. 1-3) • 탄탄한 기초 공리" }
+        }
+      },
+      {
+        id: "m2",
+        done: false,
+        i18n: {
+          pt: { title: "02. Geometria Analítica & Álgebra Vetorial em R² e R³", ref: "Paulo Boulos & Camargo • Vetores, Retas, Planos e Cônicas" },
+          en: { title: "02. Analytic Geometry & Vector Algebra in R² and R³", ref: "Paulo Boulos & Camargo • Vectors, Planes & Conics" },
+          zh: { title: "02. 解析幾何與 R²、R³ 向量代數", ref: "Paulo Boulos & Camargo • 向量、平面與圓錐曲線" },
+          ko: { title: "02. 해석기하학 및 R²·R³ 벡터 대수", ref: "Paulo Boulos & Camargo • 벡터, 평면 및 원뿔곡선" }
+        }
+      },
+      {
+        id: "m3",
+        done: false,
+        i18n: {
+          pt: { title: "03. Cálculo Diferencial e Integral (Limites ε-δ, Derivadas, Integrais de Riemann)", ref: "Guidorizzi Vol. 1 / Stewart • Rigor Técnico" },
+          en: { title: "03. Differential & Integral Calculus (ε-δ Limits, Derivatives, Riemann Integrals)", ref: "Guidorizzi Vol. 1 / Stewart • Technical Rigour" },
+          zh: { title: "03. 微積分學 (ε-δ 極限定義、導數、黎曼積分)", ref: "Guidorizzi 第一卷 / Stewart • 嚴格推導" },
+          ko: { title: "03. 미적분학 (ε-δ 극한, 도함수, 리만 적분)", ref: "Guidorizzi Vol. 1 / Stewart • 엄밀한 기술적 기초" }
+        }
+      },
+      {
+        id: "m4",
+        done: false,
+        i18n: {
+          pt: { title: "04. Álgebra Linear Formal (Espaços Vetoriais, Autovalores, SVD, Formas Quadráticas)", ref: "Boldrini / Hoffman & Kunze (Padrão ANPEC / IMPA)" },
+          en: { title: "04. Formal Linear Algebra (Vector Spaces, Eigenvalues, SVD, Quadratic Forms)", ref: "Boldrini / Hoffman & Kunze (ANPEC / IMPA Standard)" },
+          zh: { title: "04. 高等線性代數 (向量空間、特徵值、SVD、二次型)", ref: "Boldrini / Hoffman & Kunze (ANPEC / IMPA 標準)" },
+          ko: { title: "04. 형식 선형대수학 (벡터공간, 고유값, SVD, 이차형식)", ref: "Boldrini / Hoffman & Kunze (ANPEC / IMPA 기준)" }
+        }
+      },
+      {
+        id: "m5",
+        done: false,
+        i18n: {
+          pt: { title: "05. Otimização em R^n, Gradientes, Hessianas, Lagrange & Kuhn-Tucker", ref: "Simon & Blume / Chiang (Mathematics for Economists)" },
+          en: { title: "05. Optimization in R^n, Gradients, Hessians, Lagrange & Kuhn-Tucker", ref: "Simon & Blume / Chiang (Mathematics for Economists)" },
+          zh: { title: "05. 多變量優化、梯度、黑塞矩陣、拉格朗日與 Kuhn-Tucker", ref: "Simon & Blume (經濟學數學方法)" },
+          ko: { title: "05. 다변수 최적화, 그래디언트, 헤시안, 라그랑주 및 Kuhn-Tucker", ref: "Simon & Blume (경제학자를 위한 수리분석)" }
+        }
+      },
+      {
+        id: "m6",
+        done: false,
+        i18n: {
+          pt: { title: "06. Análise Real na Reta (Topologia, Compacidade, Sequências de Cauchy)", ref: "Elon Lages Lima (Curso de Análise Vol. 1 - Passaporte IMPA)" },
+          en: { title: "06. Real Analysis on the Line (Topology, Compactness, Cauchy Sequences)", ref: "Elon Lages Lima (Curso de Análise Vol. 1 - IMPA Passport)" },
+          zh: { title: "06. 實數軸上的實分析 (拓撲、緊緻性、柯西序列與一致收斂)", ref: "Elon Lages Lima (分析學教程 第一卷 - IMPA 核心)" },
+          ko: { title: "06. 실해석학 (위상, 콤팩트성, 코시 수열 및 균등수렴)", ref: "Elon Lages Lima (해석학 과정 Vol. 1 - IMPA 패스포트)" }
+        }
+      },
+      {
+        id: "m7",
+        done: false,
+        i18n: {
+          pt: { title: "07. Cálculo Estocástico, Movimento Browniano, Lema de Itô & ETTJ (Vasicek/CIR)", ref: "Steven Shreve (Stochastic Calculus for Finance II)" },
+          en: { title: "07. Stochastic Calculus, Brownian Motion, Itô's Lemma & Yield Models (Vasicek/CIR)", ref: "Steven Shreve (Stochastic Calculus for Finance II)" },
+          zh: { title: "07. 隨機微積分、布朗運動、伊藤引理 (Itô) 與利率衍生品定價", ref: "Steven Shreve (金融隨機微積分 第二卷)" },
+          ko: { title: "07. 확률미적분학, 브라운 운동, 이토 보조정리(Itô) 및 금리 모델", ref: "Steven Shreve (금융을 위한 확률미적분학 II)" }
+        }
+      }
+    ];
+
+    const ASCII_PRESETS = {
+      arasaka: `      /\\        ARASAKA CORPORATION // QUANT ALM DIVISION
+     /  \\       -----------------------------------------
+    / /\\ \\      [荒坂] SYS_NODE: SÃO_PAULO_TOKYO_LINK
+   / /__\\ \\     [機密] ENGINE:   PYTHON_DUCKDB_POLARS_V4
+  / ______ \\    [数理] TARGET:   IMPA / FGV_EESP / PH.D.
+ /_/      \\_\\   [状態] STATUS:   ZERO_EXCEL_DEPENDENCY`,
+      songbird: `  .---.   .---.   SONGBIRD // FIA BLACKWALL NEURAL BRIDGE
+ /     \\ /     \\  ---------------------------------------
+|  (O)  |  (O)  | // PROTOCOLO: INÉRCIA ZERO (REGRA 2%)
+ \\     / \\     /  // CÂMARA LINGUÍSTICA: 注音符號 & 한글
+  '---'   '---'   // CONEXÃO CORTICAL: 99.8% ESTABILIZADA
+   ||  |||  ||    // MANDÍBULA: DESTRAVADA (4MM VERTICAL)`,
+      quant: `  r(t) ^      SVENSSON YIELD CURVE & ITÔ STOCHASTIC SDE
+  14%  |        .---._
+  12%  |     .-'      '-._______.-'  dr_t = κ(θ - r_t)dt + σdW_t
+  10%  |   .'                        DV01 = - (1/10000) * ∂P/∂y
+   8%  +----------------------------> τ (Vértices ANBIMA / DI1)
+       0   1Y    2Y    5Y    10Y`,
+      anime: `     _..-""--._      [OPERADOR QUANT // NEURAL HUD]
+   .'          '.    ------------------------------
+  /   _      _   \\   > Cognição: Bottom-Up Estrita
+ |  (o)    (o)  |  > Foco: Matemática & Mercados
+ |      __      |  > Idiomas: 繁體中文 & 한국어
+  \\    '--'    /   > Meta: Autonomia Total em Mesa`
+    };
+
+    const DEFAULT_PHOTOS = [
+      {
+        id: "p1",
+        url: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80",
+        caption: "Arasaka // Blackwall Neural Architecture"
+      },
+      {
+        id: "p2",
+        url: "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=800&q=80",
+        caption: "IMPA // ANPEC Real Analysis & Stochastic Calculus"
+      },
+      {
+        id: "p3",
+        url: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80",
+        caption: "Python + DuckDB High-Frequency ALM Desk"
+      }
+    ];
+
+    /* --------------------------------------------------------------------------
+       3. APPLICATION STATE & STORAGE INITIALIZATION
+       -------------------------------------------------------------------------- */
+    let appState = {
+      theme: localStorage.getItem("ak_v2_theme") || "arasaka-dark",
+      lang: localStorage.getItem("ak_v2_lang") || "pt",
+      sfx: JSON.parse(localStorage.getItem("ak_v2_sfx")) ?? true,
+      tasks: JSON.parse(localStorage.getItem("ak_v2_tasks")) || DEFAULT_TASKS_MULTILINGUAL,
+      mathSteps: JSON.parse(localStorage.getItem("ak_v2_math")) || DEFAULT_MATH_MULTILINGUAL,
+      customAscii: localStorage.getItem("ak_v2_ascii") || ASCII_PRESETS.arasaka,
+      photos: JSON.parse(localStorage.getItem("ak_v2_photos")) || DEFAULT_PHOTOS,
+      activePhotoIndex: 0,
+      watermarkMode: "AUTO"
+    };
+
+    function saveState() {
+      localStorage.setItem("ak_v2_theme", appState.theme);
+      localStorage.setItem("ak_v2_lang", appState.lang);
+      localStorage.setItem("ak_v2_sfx", JSON.stringify(appState.sfx));
+      localStorage.setItem("ak_v2_tasks", JSON.stringify(appState.tasks));
+      localStorage.setItem("ak_v2_math", JSON.stringify(appState.mathSteps));
+      localStorage.setItem("ak_v2_ascii", appState.customAscii);
+      localStorage.setItem("ak_v2_photos", JSON.stringify(appState.photos));
+    }
+
+    /* --------------------------------------------------------------------------
+       4. WEB AUDIO API SYNTHESIZER
+       -------------------------------------------------------------------------- */
+    function playBeep(freq = 880, duration = 0.04, type = "sine") {
+      if (!appState.sfx) return;
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        gain.gain.setValueAtTime(0.04, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + duration);
+      } catch (e) {}
+    }
+
+    function toggleAudioSfx() {
+      appState.sfx = !appState.sfx;
+      saveState();
+      const icon = document.getElementById("sfxIcon");
+      icon.className = appState.sfx ? "ph-bold ph-speaker-high" : "ph-bold ph-speaker-slash text-[var(--text-muted)]";
+      if (appState.sfx) playBeep(960, 0.05);
+    }
+
+    /* --------------------------------------------------------------------------
+       5. 4 EXPLICIT THEMES & 100% DEEP MULTILINGUAL ENGINE
+       -------------------------------------------------------------------------- */
+    function setSystemTheme(themeName) {
+      appState.theme = themeName;
+      document.documentElement.setAttribute("data-theme", themeName);
+      saveState();
+      playBeep(themeName.includes("blackwall") ? 1150 : 720, 0.05, "triangle");
+
+      const themes = ["arasaka-dark", "arasaka-light", "blackwall-dark", "blackwall-light"];
+      themes.forEach(t => {
+        const btn = document.getElementById(`theme-${t}`);
+        if (!btn) return;
+        if (t === themeName) {
+          btn.className = "px-2 py-1 rounded text-[10px] font-mono-tech font-bold transition flex items-center gap-1 bg-[var(--brand-primary)] text-white shadow";
+        } else {
+          btn.className = "px-2 py-1 rounded text-[10px] font-mono-tech font-bold transition flex items-center gap-1 text-[var(--text-secondary)] hover:text-[var(--text-main)]";
+        }
+      });
+
+      const svg = document.getElementById("brandSvgLogo");
+      const badge = document.getElementById("uiClearanceBadge");
+      if (themeName.includes("blackwall")) {
+        badge.innerText = "BLACKWALL // FIA";
+        svg.innerHTML = `
+          <circle cx="50" cy="50" r="10" />
+          <path d="M 10 50 Q 50 12 90 50 Q 50 68 10 50 Z" fill="none" stroke="currentColor" stroke-width="7"/>
+          <path d="M 28 32 L 50 78 L 72 32" fill="none" stroke="currentColor" stroke-width="5"/>
+        `;
+      } else {
+        badge.innerText = "ARASAKA // LVL-05";
+        svg.innerHTML = `
+          <circle cx="50" cy="50" r="12" />
+          <path d="M50 8 L63 36 L37 36 Z" />
+          <path d="M86 72 L62 56 L74 34 Z" />
+          <path d="M14 72 L26 34 L38 56 Z" />
+        `;
+      }
+
+      drawPage1YieldCurve();
+      runAllEconomicEngines();
+    }
+
+    function setSystemLanguage(langCode) {
+      appState.lang = langCode;
+      saveState();
+      playBeep(880, 0.04);
+
+      ["pt", "en", "zh", "ko"].forEach(l => {
+        const btn = document.getElementById(`lang-${l}`);
+        if (l === langCode) {
+          btn.className = "px-2.5 py-1 rounded font-bold transition bg-[var(--brand-primary)] text-white";
+        } else {
+          btn.className = "px-2.5 py-1 rounded font-bold transition text-[var(--text-secondary)] hover:text-[var(--text-main)]";
+        }
+      });
+
+      const dict = I18N_DB[langCode] || I18N_DB.pt;
+      document.getElementById("uiMainTitle").innerText = dict.mainTitle;
+      document.getElementById("uiSubtitle").innerText = dict.subtitle;
+
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (dict[key]) el.innerText = dict[key];
+      });
+
+      renderAllViews();
+    }
+
+    /* --------------------------------------------------------------------------
+       6. WATERMARK SCRIPT CYCLER
+       -------------------------------------------------------------------------- */
+    function cycleWatermarkScript() {
+      const modes = ["AUTO", "KANJI", "HANZI", "HANGUL"];
+      const idx = (modes.indexOf(appState.watermarkMode) + 1) % modes.length;
+      appState.watermarkMode = modes[idx];
+      document.getElementById("scriptCycleIndicator").innerText = `[SCRIPT: ${appState.watermarkMode}]`;
+
+      document.querySelectorAll(".script-watermark").forEach(wm => {
+        const origType = wm.getAttribute("data-watermark");
+        if (appState.watermarkMode === "KANJI") wm.innerText = "荒坂・数理・機密";
+        else if (appState.watermarkMode === "HANZI") wm.innerText = "量化・殖利率・ㄅㄆㄇ";
+        else if (appState.watermarkMode === "HANGUL") wm.innerText = "한글・실행・프로토콜";
+        else {
+          if (origType === "kanji") wm.innerText = "荒坂・数理";
+          if (origType === "hanzi") wm.innerText = "資產負債・ㄅㄆ";
+          if (origType === "hangul") wm.innerText = "한글・목표";
+        }
+      });
+      playBeep(1020, 0.04);
+    }
+
+    /* --------------------------------------------------------------------------
+       7. TAB NAVIGATION
+       -------------------------------------------------------------------------- */
+    function switchMainTab(tabId) {
+      playBeep(780, 0.03);
+      const tabs = ["overview", "econlab", "roadmaps", "tasks", "emergency"];
+      tabs.forEach(t => {
+        const sec = document.getElementById(`section-${t}`);
+        const btn = document.getElementById(`tab-${t}`);
+        if (t === tabId) {
+          sec.classList.remove("hidden");
+          btn.className = "px-3.5 py-1.5 rounded text-xs font-aptos flex items-center gap-2 transition bg-[var(--brand-primary)] text-white shadow";
+        } else {
+          sec.classList.add("hidden");
+          btn.className = "px-3.5 py-1.5 rounded text-xs font-aptos flex items-center gap-2 transition text-[var(--text-secondary)] hover:text-[var(--text-main)] hover:bg-[var(--bg-card)]";
+        }
+      });
+      if (tabId === "overview") drawPage1YieldCurve();
+      if (tabId === "econlab") runAllEconomicEngines();
+    }
+
+    /* --------------------------------------------------------------------------
+       8. MULTILINGUAL TASK & ROADMAP RENDERING
+       -------------------------------------------------------------------------- */
+    function getTaskLocalized(task) {
+      const lang = appState.lang;
+      if (task.i18n && task.i18n[lang]) {
+        return task.i18n[lang];
+      }
+      return {
+        title: task.title || (task.i18n ? task.i18n.pt.title : ""),
+        micro: task.micro || (task.i18n ? task.i18n.pt.micro : ""),
+        howTo: task.howTo || (task.i18n ? task.i18n.pt.howTo : "")
+      };
+    }
+
+    function createTaskCardHTML(task) {
+      const dict = I18N_DB[appState.lang] || I18N_DB.pt;
+      const loc = getTaskLocalized(task);
+      const priorityColors = {
+        P0: "bg-[var(--brand-primary)] text-white",
+        P1: "bg-[var(--brand-secondary)] text-black font-extrabold",
+        P2: "border border-[var(--brand-primary)] text-[var(--brand-primary)]",
+        P3: "border border-[var(--border-subtle)] text-[var(--text-muted)]"
+      };
+
+      return `
+        <div class="corp-card p-3.5 rounded transition ${task.done ? 'opacity-55' : ''}">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex items-start gap-2.5 flex-1">
+              <input type="checkbox" ${task.done ? 'checked' : ''} onchange="toggleTaskStatus('${task.id}')" class="mt-1 w-4 h-4 cursor-pointer accent-[var(--brand-primary)]">
+              <div class="flex-1">
+                <div class="flex flex-wrap items-center gap-1.5 mb-1">
+                  <span class="px-1.5 py-0.5 text-[9px] font-mono-tech font-bold rounded ${priorityColors[task.priority] || priorityColors.P2}">
+                    ${task.priority}
+                  </span>
+                  <span class="text-[9.5px] font-mono-tech text-[var(--text-muted)]">
+                    [${dict.pillarBadges[task.pillar] || task.pillar}]
+                  </span>
+                </div>
+                <h4 class="font-semibold text-xs ${task.done ? 'line-through text-[var(--text-muted)]' : 'text-[var(--text-main)]'}">
+                  ${loc.title}
+                </h4>
+                ${loc.micro ? `
+                  <div class="mt-1.5 text-[10.5px] font-mono-tech text-[var(--brand-primary)] flex items-center gap-1">
+                    <i class="ph-bold ph-lightning"></i>
+                    <span><strong>${dict.lbl_micro_action}</strong> ${loc.micro}</span>
+                  </div>
+                ` : ''}
+              </div>
+            </div>
+
+            <div class="flex items-center gap-1.5 shrink-0">
+              <button onclick="toggleHowToDrawer('howto-${task.id}')" class="px-2 py-1 rounded text-[10px] font-mono-tech border border-[var(--border-main)] text-[var(--text-main)] hover:bg-[var(--brand-primary)] hover:text-white transition">
+                ${dict.btn_howto}
+              </button>
+              <button onclick="deleteTask('${task.id}')" class="text-[var(--text-muted)] hover:text-[var(--brand-primary)] px-1 text-xs">
+                ✕
+              </button>
+            </div>
+          </div>
+
+          <div id="howto-${task.id}" class="hidden mt-3 pt-2.5 border-t border-[var(--border-subtle)] text-[11px] font-mono-tech bg-[var(--bg-input)] p-2.5 rounded">
+            <div class="text-[var(--brand-secondary)] font-bold mb-1">${dict.lbl_howto_header}</div>
+            <div class="text-[var(--text-secondary)] whitespace-pre-line leading-relaxed">${loc.howTo}</div>
+            <div class="mt-2 flex justify-end">
+              <button onclick="startQuickSession('${loc.title.replace(/'/g, '')}')" class="bg-[var(--brand-primary)] text-white px-2.5 py-1 rounded text-[10px] font-bold">
+                ${dict.btn_start_15m}
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderDynamicRoadmapsAndEmergency() {
+      const dict = I18N_DB[appState.lang] || I18N_DB.pt;
+      const r = dict.roadmaps;
+      const em = dict.emergency;
+
+      const doneMath = appState.mathSteps.filter(m => m.done).length;
+      const mathPct = Math.round((doneMath / appState.mathSteps.length) * 100);
+
+      const mathItemsHTML = appState.mathSteps.map(m => {
+        const ml = (m.i18n && m.i18n[appState.lang]) ? m.i18n[appState.lang] : m.i18n.pt;
+        return `
+          <div class="corp-card p-3 rounded flex items-center justify-between gap-3 ${m.done ? 'border-l-4 border-l-[var(--status-ok)]' : 'border-l-4 border-l-[var(--brand-primary)]'}">
+            <div class="flex items-start gap-2.5">
+              <input type="checkbox" ${m.done ? 'checked' : ''} onchange="toggleMathStep('${m.id}')" class="mt-0.5 cursor-pointer accent-[var(--brand-primary)]">
+              <div>
+                <div class="font-semibold text-xs ${m.done ? 'line-through text-[var(--text-muted)]' : 'text-[var(--text-main)]'}">${ml.title}</div>
+                <div class="text-[10px] font-mono-tech text-[var(--brand-secondary)]">${ml.ref}</div>
+              </div>
+            </div>
+            <button onclick="startQuickSession('${ml.title.replace(/'/g, '')}')" class="px-2 py-1 text-[10px] font-mono-tech border border-[var(--border-subtle)] rounded hover:border-[var(--brand-primary)] shrink-0">
+              15M
+            </button>
+          </div>
+        `;
+      }).join("");
+
+      document.getElementById("dynamicRoadmapsLeft").innerHTML = `
+        <!-- TRACK 1: ACADEMIC -->
+        <div class="corp-panel p-5 rounded-sm space-y-4">
+          <div class="script-watermark" data-watermark="kanji">経済学博士</div>
+          <div class="relative z-10 border-b border-[var(--border-subtle)] pb-3 flex items-center justify-between">
+            <div>
+              <span class="text-[10px] font-mono-tech text-[var(--brand-primary)] font-bold uppercase">${r.track1_tag}</span>
+              <h3 class="font-aptos text-sm text-[var(--text-main)] mt-0.5">${r.track1_title}</h3>
+            </div>
+            <i class="ph-bold ph-graduation-cap text-2xl text-[var(--brand-primary)]"></i>
+          </div>
+          <div class="relative z-10 space-y-3 text-xs">
+            <div class="corp-card p-3.5 rounded">
+              <div class="font-mono-tech text-[11px] text-[var(--brand-primary)] font-bold">${r.t1_f1_title}</div>
+              <p class="text-[var(--text-secondary)] mt-1">${r.t1_f1_desc}</p>
+              <div class="mt-2 p-2 bg-[var(--bg-input)] border-l-2 border-[var(--brand-primary)] font-mono-tech text-[10.5px]">${r.t1_f1_how}</div>
+            </div>
+            <div class="corp-card p-3.5 rounded">
+              <div class="font-mono-tech text-[11px] text-[var(--brand-secondary)] font-bold">${r.t1_f2_title}</div>
+              <p class="text-[var(--text-secondary)] mt-1">${r.t1_f2_desc}</p>
+              <div class="mt-2 p-2 bg-[var(--bg-input)] border-l-2 border-[var(--brand-secondary)] font-mono-tech text-[10.5px]">${r.t1_f2_how}</div>
+            </div>
+            <div class="corp-card p-3.5 rounded">
+              <div class="font-mono-tech text-[11px] text-[var(--status-ok)] font-bold">${r.t1_f3_title}</div>
+              <p class="text-[var(--text-secondary)] mt-1">${r.t1_f3_desc}</p>
+              <div class="mt-2 p-2 bg-[var(--bg-input)] border-l-2 border-[var(--status-ok)] font-mono-tech text-[10.5px]">${r.t1_f3_how}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TRACK 3: MATH CURRICULUM -->
+        <div class="corp-panel p-5 rounded-sm space-y-4">
+          <div class="script-watermark" data-watermark="kanji">公理・解析</div>
+          <div class="relative z-10 border-b border-[var(--border-subtle)] pb-3 flex items-center justify-between">
+            <div>
+              <span class="text-[10px] font-mono-tech text-[var(--brand-primary)] font-bold uppercase">${r.track3_tag}</span>
+              <h3 class="font-aptos text-sm text-[var(--text-main)] mt-0.5">${r.track3_title}</h3>
+            </div>
+            <span class="px-2 py-1 font-mono-tech text-xs font-bold bg-[var(--brand-primary)] text-white rounded">${mathPct}%</span>
+          </div>
+          <div class="relative z-10 space-y-2">${mathItemsHTML}</div>
+        </div>
+      `;
+
+      document.getElementById("dynamicRoadmapsRight").innerHTML = `
+        <!-- TRACK 2: QUANT & PYTHON -->
+        <div class="corp-panel p-5 rounded-sm space-y-4">
+          <div class="script-watermark" data-watermark="hanzi">資產負債</div>
+          <div class="relative z-10 border-b border-[var(--border-subtle)] pb-3 flex items-center justify-between">
+            <div>
+              <span class="text-[10px] font-mono-tech text-[var(--brand-secondary)] font-bold uppercase">${r.track2_tag}</span>
+              <h3 class="font-aptos text-sm text-[var(--text-main)] mt-0.5">${r.track2_title}</h3>
+            </div>
+            <i class="ph-bold ph-database text-2xl text-[var(--brand-secondary)]"></i>
+          </div>
+          <div class="relative z-10 space-y-3 text-xs">
+            <div class="corp-card p-3.5 rounded">
+              <div class="font-mono-tech text-[11px] text-[var(--brand-primary)] font-bold">${r.t2_f1_title}</div>
+              <p class="text-[var(--text-secondary)] mt-1">${r.t2_f1_desc}</p>
+              <div class="mt-2 p-2 bg-[var(--bg-input)] border-l-2 border-[var(--brand-primary)] font-mono-tech text-[10.5px]">${r.t2_f1_how}</div>
+            </div>
+            <div class="corp-card p-3.5 rounded">
+              <div class="font-mono-tech text-[11px] text-[var(--brand-secondary)] font-bold">${r.t2_f2_title}</div>
+              <p class="text-[var(--text-secondary)] mt-1">${r.t2_f2_desc}</p>
+              <div class="mt-2 p-2 bg-[var(--bg-input)] border-l-2 border-[var(--brand-secondary)] font-mono-tech text-[10.5px]">${r.t2_f2_how}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TRACK 4: LANGUAGES & PROSE -->
+        <div class="corp-panel p-5 rounded-sm space-y-4">
+          <div class="script-watermark" data-watermark="hangul">한글・注音</div>
+          <div class="relative z-10 border-b border-[var(--border-subtle)] pb-3 flex items-center justify-between">
+            <div>
+              <span class="text-[10px] font-mono-tech text-[var(--status-ok)] font-bold uppercase">${r.track4_tag}</span>
+              <h3 class="font-aptos text-sm text-[var(--text-main)] mt-0.5">${r.track4_title}</h3>
+            </div>
+            <i class="ph-bold ph-books text-2xl text-[var(--status-ok)]"></i>
+          </div>
+          <div class="relative z-10 space-y-3 text-xs">
+            <div class="corp-card p-3.5 rounded">
+              <div class="font-mono-tech text-[11px] text-[var(--brand-primary)] font-bold">${r.t4_f1_title}</div>
+              <p class="text-[var(--text-secondary)] mt-1">${r.t4_f1_desc}</p>
+              <div class="mt-2 p-2 bg-[var(--bg-input)] border-l-2 border-[var(--brand-primary)] font-mono-tech text-[10.5px]">${r.t4_f1_how}</div>
+            </div>
+            <div class="corp-card p-3.5 rounded">
+              <div class="font-mono-tech text-[11px] text-[var(--brand-secondary)] font-bold">${r.t4_f2_title}</div>
+              <p class="text-[var(--text-secondary)] mt-1">${r.t4_f2_desc}</p>
+              <div class="mt-2 p-2 bg-[var(--bg-input)] border-l-2 border-[var(--brand-secondary)] font-mono-tech text-[10.5px]">${r.t4_f2_how}</div>
+            </div>
+            <div class="corp-card p-3.5 rounded">
+              <div class="font-mono-tech text-[11px] text-[var(--status-ok)] font-bold">${r.t4_f3_title}</div>
+              <p class="text-[var(--text-secondary)] mt-1">${r.t4_f3_desc}</p>
+              <div class="mt-2 p-2 bg-[var(--bg-input)] border-l-2 border-[var(--status-ok)] font-mono-tech text-[10.5px]">${r.t4_f3_how}</div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Render Emergency Tab
+      document.getElementById("emergencyDynamicContainer").innerHTML = `
+        <div class="corp-panel p-5 rounded-sm border-t-4 border-t-[var(--brand-secondary)] mb-6">
+          <div class="script-watermark" data-watermark="hangul">비상실행</div>
+          <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <span class="text-[10px] font-mono-tech text-[var(--brand-secondary)] font-bold uppercase">${em.tag}</span>
+              <h2 class="font-aptos text-base text-[var(--text-main)] mt-0.5">${em.title}</h2>
+              <p class="text-xs text-[var(--text-secondary)] mt-1 max-w-3xl">${em.sub}</p>
+            </div>
+            <button onclick="toggleSensoryPurge(true)" class="bg-[var(--brand-secondary)] text-white px-4 py-2.5 rounded text-xs font-aptos tracking-wider hover:opacity-90 transition shrink-0 flex items-center gap-2">
+              <i class="ph-bold ph-eye-slash"></i>
+              <span>${em.btn_purge}</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div class="corp-panel p-4 rounded-sm space-y-3">
+            <h3 class="font-aptos text-xs text-[var(--brand-primary)] border-b border-[var(--border-subtle)] pb-2">${em.col1_title}</h3>
+            <div class="space-y-2.5 font-mono-tech text-[11px]">
+              <div class="p-2.5 bg-[var(--bg-card)] rounded border-l-2 border-[var(--brand-primary)]">
+                <strong class="text-[var(--text-main)] block">${em.c1_math_t}</strong>
+                <span class="text-[var(--text-secondary)]">${em.c1_math_d}</span>
+              </div>
+              <div class="p-2.5 bg-[var(--bg-card)] rounded border-l-2 border-[var(--brand-secondary)]">
+                <strong class="text-[var(--text-main)] block">${em.c1_py_t}</strong>
+                <span class="text-[var(--text-secondary)]">${em.c1_py_d}</span>
+              </div>
+              <div class="p-2.5 bg-[var(--bg-card)] rounded border-l-2 border-[var(--status-ok)]">
+                <strong class="text-[var(--text-main)] block">${em.c1_lang_t}</strong>
+                <span class="text-[var(--text-secondary)]">${em.c1_lang_d}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="corp-panel p-4 rounded-sm space-y-3">
+            <h3 class="font-aptos text-xs text-[var(--brand-secondary)] border-b border-[var(--border-subtle)] pb-2">${em.col2_title}</h3>
+            <div class="space-y-2.5 font-mono-tech text-[10.5px]">
+              <div class="p-2.5 bg-[var(--bg-card)] rounded space-y-1.5">
+                <div class="flex justify-between items-center">
+                  <strong class="text-[var(--text-main)]">${em.c2_alm_label}</strong>
+                  <button onclick="copyQuickScript('scriptAlm')" class="text-[var(--brand-primary)] font-bold hover:underline">${em.btn_copy}</button>
+                </div>
+                <p id="scriptAlm" class="text-[var(--text-muted)] bg-[var(--bg-input)] p-1.5 rounded">${em.c2_alm_text}</p>
+              </div>
+              <div class="p-2.5 bg-[var(--bg-card)] rounded space-y-1.5">
+                <div class="flex justify-between items-center">
+                  <strong class="text-[var(--text-main)]">${em.c2_prep_label}</strong>
+                  <button onclick="copyQuickScript('scriptPreply')" class="text-[var(--brand-primary)] font-bold hover:underline">${em.btn_copy}</button>
+                </div>
+                <p id="scriptPreply" class="text-[var(--text-muted)] bg-[var(--bg-input)] p-1.5 rounded">${em.c2_prep_text}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="corp-panel p-4 rounded-sm space-y-3">
+            <h3 class="font-aptos text-xs text-[var(--status-ok)] border-b border-[var(--border-subtle)] pb-2">${em.col3_title}</h3>
+            <div class="space-y-2.5 font-mono-tech text-[11px]">
+              <div class="p-2.5 bg-[var(--bg-card)] rounded">
+                <strong class="text-[var(--text-main)] block">${em.c3_jaw_t}</strong>
+                <span class="text-[var(--text-secondary)]">${em.c3_jaw_d}</span>
+              </div>
+              <div class="p-2.5 bg-[var(--bg-card)] rounded">
+                <strong class="text-[var(--text-main)] block">${em.c3_chest_t}</strong>
+                <span class="text-[var(--text-secondary)]">${em.c3_chest_d}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderAllViews() {
+      const dict = I18N_DB[appState.lang] || I18N_DB.pt;
+      const total = appState.tasks.length;
+      const done = appState.tasks.filter(t => t.done).length;
+      const pending = total - done;
+      const critical = appState.tasks.filter(t => t.priority === "P0" && !t.done).length;
+      const pct = total === 0 ? 0 : Math.round((done / total) * 100);
+
+      document.getElementById("kpiTotalPercent").innerText = `${pct}%`;
+      document.getElementById("kpiProgressBar").style.width = `${pct}%`;
+      document.getElementById("kpiCompletedText").innerText = `${done} ${dict.kpi_done_word}`;
+      document.getElementById("kpiPendingText").innerText = `${pending} ${dict.kpi_todo_word}`;
+      document.getElementById("kpiCriticalCount").innerText = critical;
+
+      const doneMath = appState.mathSteps.filter(m => m.done).length;
+      document.getElementById("kpiMathSteps").innerText = `${doneMath}/${appState.mathSteps.length} Modules`;
+
+      const sortedTasks = [...appState.tasks].sort((a, b) => Number(a.done) - Number(b.done));
+      document.getElementById("overviewTaskList").innerHTML = sortedTasks.map(createTaskCardHTML).join("");
+
+      renderFullTaskBoard();
+      renderDynamicRoadmapsAndEmergency();
+      renderPage1PhotoDeck();
+
+      document.getElementById("overviewAsciiDisplay").innerText = appState.customAscii;
+      document.getElementById("asciiEditorTextarea").value = appState.customAscii;
+    }
+
+    function renderFullTaskBoard() {
+      const pillarFilter = document.getElementById("filterPillar").value;
+      const priorityFilter = document.getElementById("filterPriority").value;
+      const statusFilter = document.getElementById("filterStatus").value;
+
+      const filtered = appState.tasks.filter(t => {
+        if (pillarFilter !== "ALL" && t.pillar !== pillarFilter) return false;
+        if (priorityFilter !== "ALL" && t.priority !== priorityFilter) return false;
+        if (statusFilter === "PENDING" && t.done) return false;
+        if (statusFilter === "DONE" && !t.done) return false;
+        return true;
+      });
+
+      const container = document.getElementById("fullTaskListContainer");
+      container.innerHTML = filtered.map(createTaskCardHTML).join("");
+    }
+
+    function toggleHowToDrawer(drawerId) {
+      const el = document.getElementById(drawerId);
+      if (el) {
+        el.classList.toggle("hidden");
+        playBeep(640, 0.03);
+      }
+    }
+
+    function toggleTaskStatus(taskId) {
+      const task = appState.tasks.find(t => t.id === taskId);
+      if (task) {
+        task.done = !task.done;
+        saveState();
+        renderAllViews();
+        playBeep(task.done ? 1200 : 440, 0.06);
+      }
+    }
+
+    function deleteTask(taskId) {
+      appState.tasks = appState.tasks.filter(t => t.id !== taskId);
+      saveState();
+      renderAllViews();
+      playBeep(340, 0.05);
+    }
+
+    function toggleMathStep(id) {
+      const step = appState.mathSteps.find(m => m.id === id);
+      if (step) {
+        step.done = !step.done;
+        saveState();
+        renderAllViews();
+        playBeep(step.done ? 1250 : 480, 0.05);
+      }
+    }
+
+    function openTaskModal() {
+      document.getElementById("taskModal").classList.remove("hidden");
+      document.getElementById("newTaskTitle").focus();
+      playBeep(700, 0.04);
+    }
+
+    function closeTaskModal() {
+      document.getElementById("taskModal").classList.add("hidden");
+    }
+
+    function submitNewTask(e) {
+      e.preventDefault();
+      const title = document.getElementById("newTaskTitle").value.trim();
+      const pillar = document.getElementById("newTaskPillar").value;
+      const priority = document.getElementById("newTaskPriority").value;
+      const micro = document.getElementById("newTaskMicro").value.trim() || "2% Micro-Step";
+      const howTo = document.getElementById("newTaskHowTo").value.trim() || "15m atomic execution block.";
+
+      if (!title) return;
+
+      appState.tasks.unshift({
+        id: "t-" + Date.now(),
+        pillar,
+        priority,
+        done: false,
+        title,
+        micro,
+        howTo
+      });
+
+      saveState();
+      closeTaskModal();
+      e.target.reset();
+      renderAllViews();
+      playBeep(1100, 0.06);
+      showToast("// DIRECTIVE REGISTERED");
+    }
+
+    /* --------------------------------------------------------------------------
+       9. PAGE 1 DIRECT PHOTO DECK & LIVE ASCII EDITOR
+       -------------------------------------------------------------------------- */
+    function renderPage1PhotoDeck() {
+      const heroImg = document.getElementById("p1HeroImage");
+      const heroCap = document.getElementById("p1HeroCaption");
+      const strip = document.getElementById("p1PhotoThumbStrip");
+
+      if (appState.photos.length === 0) {
+        appState.photos = [...DEFAULT_PHOTOS];
+      }
+      if (appState.activePhotoIndex >= appState.photos.length) {
+        appState.activePhotoIndex = 0;
+      }
+
+      const active = appState.photos[appState.activePhotoIndex];
+      heroImg.src = active.url;
+      heroCap.innerText = active.caption;
+
+      strip.innerHTML = appState.photos.map((p, idx) => `
+        <button onclick="selectHeroPhoto(${idx})" class="w-14 h-10 rounded overflow-hidden border-2 shrink-0 transition ${idx === appState.activePhotoIndex ? 'border-[var(--brand-primary)] scale-105' : 'border-transparent opacity-60 hover:opacity-100'}">
+          <img src="${p.url}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x70/111318/e60012?text=IMG'">
+        </button>
+      `).join("");
+    }
+
+    function selectHeroPhoto(idx) {
+      appState.activePhotoIndex = idx;
+      renderPage1PhotoDeck();
+      playBeep(820, 0.03);
+    }
+
+    function cycleHeroPhoto(dir) {
+      if (appState.photos.length === 0) return;
+      appState.activePhotoIndex = (appState.activePhotoIndex + dir + appState.photos.length) % appState.photos.length;
+      renderPage1PhotoDeck();
+      playBeep(760, 0.03);
+    }
+
+    function handleLocalPhotoUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        appState.photos.unshift({
+          id: "p-" + Date.now(),
+          url: e.target.result,
+          caption: file.name.replace(/\.[^/.]+$/, "")
+        });
+        appState.activePhotoIndex = 0;
+        saveState();
+        renderPage1PhotoDeck();
+        playBeep(1120, 0.06);
+        showToast("// PHOTO UPLOADED TO PAGE 1");
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function togglePage1UrlBox() {
+      document.getElementById("p1UrlDrawer").classList.toggle("hidden");
+    }
+
+    function addPhotoFromPage1Url() {
+      const url = document.getElementById("p1ImgUrlInput").value.trim();
+      const caption = document.getElementById("p1ImgCaptionInput").value.trim() || "Visual Target";
+      if (!url) return;
+      appState.photos.unshift({ id: "p-" + Date.now(), url, caption });
+      appState.activePhotoIndex = 0;
+      saveState();
+      renderPage1PhotoDeck();
+      document.getElementById("p1ImgUrlInput").value = "";
+      document.getElementById("p1ImgCaptionInput").value = "";
+      document.getElementById("p1UrlDrawer").classList.add("hidden");
+      playBeep(1100, 0.05);
+    }
+
+    function deleteActiveHeroPhoto() {
+      if (appState.photos.length <= 1) return;
+      appState.photos.splice(appState.activePhotoIndex, 1);
+      appState.activePhotoIndex = 0;
+      saveState();
+      renderPage1PhotoDeck();
+      playBeep(420, 0.04);
+    }
+
+    function togglePage1AsciiEditor() {
+      const pre = document.getElementById("overviewAsciiDisplay");
+      const editBox = document.getElementById("p1AsciiEditContainer");
+      const isEditing = !editBox.classList.contains("hidden");
+      if (isEditing) {
+        editBox.classList.add("hidden");
+        pre.classList.remove("hidden");
+      } else {
+        editBox.classList.remove("hidden");
+        pre.classList.add("hidden");
+        document.getElementById("asciiEditorTextarea").focus();
+      }
+      playBeep(740, 0.03);
+    }
+
+    function loadAsciiPreset(presetKey) {
+      if (presetKey === "custom") return;
+      if (ASCII_PRESETS[presetKey]) {
+        appState.customAscii = ASCII_PRESETS[presetKey];
+        saveState();
+        document.getElementById("overviewAsciiDisplay").innerText = appState.customAscii;
+        document.getElementById("asciiEditorTextarea").value = appState.customAscii;
+        playBeep(860, 0.04);
+      }
+    }
+
+    function saveCustomAscii() {
+      const val = document.getElementById("asciiEditorTextarea").value;
+      appState.customAscii = val;
+      saveState();
+      document.getElementById("overviewAsciiDisplay").innerText = val;
+      document.getElementById("asciiPresetSelect").value = "custom";
+      document.getElementById("p1AsciiEditContainer").classList.add("hidden");
+      document.getElementById("overviewAsciiDisplay").classList.remove("hidden");
+      playBeep(1150, 0.06);
+      showToast("// ASCII SAVED ON PAGE 1");
+    }
+
+    /* --------------------------------------------------------------------------
+       10. 4 INTERACTIVE ECONOMICS & QUANT ALM ENGINES
+       -------------------------------------------------------------------------- */
+    let curveParams = { b0: 11.8, b1: -1.6, b2: 2.4, b3: -0.9, l1: 1.8, l2: 4.2, shockBp: 150 };
+
+    function svenssonRate(tau, p) {
+      const t1 = (1 - Math.exp(-tau / p.l1)) / (tau / p.l1);
+      const t2 = t1 - Math.exp(-tau / p.l1);
+      const t3 = ((1 - Math.exp(-tau / p.l2)) / (tau / p.l2)) - Math.exp(-tau / p.l2);
+      return p.b0 + p.b1 * t1 + p.b2 * t2 + p.b3 * t3;
+    }
+
+    function updateQuickCurveParam(key, val) {
+      curveParams[key] = parseFloat(val);
+      if (key === "b0") {
+        document.getElementById("p1Beta0Val").innerText = `${curveParams.b0.toFixed(1)}%`;
+        const sl = document.getElementById("sl_e1_b0");
+        if (sl) sl.value = curveParams.b0;
+      }
+      if (key === "b1") {
+        document.getElementById("p1Beta1Val").innerText = `${curveParams.b1.toFixed(1)}%`;
+        const sl = document.getElementById("sl_e1_b1");
+        if (sl) sl.value = curveParams.b1;
+      }
+      drawPage1YieldCurve();
+    }
+
+    function drawPage1YieldCurve() {
+      const canvas = document.getElementById("yieldCurveCanvas");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      const style = getComputedStyle(document.documentElement);
+      const primaryColor = style.getPropertyValue("--brand-primary").trim() || "#e60012";
+      const secondaryColor = style.getPropertyValue("--brand-secondary").trim() || "#d4af37";
+      const mutedColor = style.getPropertyValue("--text-muted").trim() || "#6e7785";
+
+      ctx.strokeStyle = "rgba(128, 128, 128, 0.15)";
+      ctx.lineWidth = 1;
+      for (let i = 1; i < 5; i++) {
+        const y = (h / 5) * i;
+        ctx.beginPath(); ctx.moveTo(30, y); ctx.lineTo(w - 10, y); ctx.stroke();
+      }
+
+      // Base Svensson Curve
+      ctx.strokeStyle = primaryColor;
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      for (let x = 30; x <= w - 12; x += 4) {
+        const tau = ((x - 30) / (w - 45)) * 10 + 0.1;
+        const rate = svenssonRate(tau, curveParams);
+        const y = h - 20 - ((rate - 6.5) / 11) * (h - 35);
+        if (x === 30) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+
+      const maturities = [0.5, 1, 2, 5, 10];
+      maturities.forEach(m => {
+        const x = 30 + ((m - 0.1) / 10) * (w - 45);
+        const r = svenssonRate(m, curveParams);
+        const y = h - 20 - ((r - 6.5) / 11) * (h - 35);
+        ctx.fillStyle = secondaryColor;
+        ctx.beginPath(); ctx.arc(x, y, 3.2, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = mutedColor;
+        ctx.font = "9px JetBrains Mono";
+        ctx.fillText(`${m}Y`, x - 6, h - 5);
+        if (m === 1 || m === 5 || m === 10) {
+          ctx.fillStyle = primaryColor;
+          ctx.fillText(`${r.toFixed(1)}%`, x - 12, y - 6);
+        }
+      });
+    }
+
+    function randomizeYieldCurve() {
+      curveParams.b0 = +(9.5 + Math.random() * 4.5).toFixed(1);
+      curveParams.b1 = +(-3.0 + Math.random() * 4.5).toFixed(1);
+      document.getElementById("p1Beta0Val").innerText = `${curveParams.b0}%`;
+      document.getElementById("p1Beta1Val").innerText = `${curveParams.b1}%`;
+      drawPage1YieldCurve();
+      playBeep(980, 0.05, "sawtooth");
+    }
+
+    // ENGINE 1: LAB SVENSSON & IRRBB
+    function runEngine1() {
+      const b0 = parseFloat(document.getElementById("sl_e1_b0").value);
+      const b1 = parseFloat(document.getElementById("sl_e1_b1").value);
+      const b2 = parseFloat(document.getElementById("sl_e1_b2").value);
+      const shockBp = parseFloat(document.getElementById("sl_e1_shock").value);
+
+      curveParams.b0 = b0;
+      curveParams.b1 = b1;
+      curveParams.b2 = b2;
+      curveParams.shockBp = shockBp;
+
+      document.getElementById("val_e1_b0").innerText = `${b0.toFixed(1)}%`;
+      document.getElementById("val_e1_b1").innerText = `${b1.toFixed(1)}%`;
+      document.getElementById("val_e1_b2").innerText = `${b2.toFixed(1)}%`;
+      document.getElementById("val_e1_shock").innerText = `${shockBp >= 0 ? '+' : ''}${shockBp} bp`;
+
+      const dGap = 1.85;
+      const equityBase = 2300; // R$ Millions
+      const deltaR = shockBp / 10000;
+      const deltaEve = -dGap * deltaR * equityBase;
+      const deltaNii = (deltaR * 1840);
+
+      document.getElementById("out_e1_dgap").innerText = `+${dGap.toFixed(2)} Yrs`;
+      document.getElementById("out_e1_eve").innerText = `${deltaEve >= 0 ? '+' : ''}R$ ${deltaEve.toFixed(1)}M`;
+      document.getElementById("out_e1_nii").innerText = `${deltaNii >= 0 ? '+' : ''}R$ ${deltaNii.toFixed(1)}M`;
+
+      const canvas = document.getElementById("labSvenssonCanvas");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      const w = canvas.width, h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      const style = getComputedStyle(document.documentElement);
+      const primary = style.getPropertyValue("--brand-primary").trim();
+      const secondary = style.getPropertyValue("--brand-secondary").trim();
+
+      // Base curve
+      ctx.strokeStyle = primary;
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      for (let x = 35; x <= w - 15; x += 5) {
+        const tau = ((x - 35) / (w - 50)) * 10 + 0.1;
+        const r = svenssonRate(tau, curveParams);
+        const y = h - 22 - ((r - 5) / 15) * (h - 35);
+        if (x === 35) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+
+      // Shocked curve
+      ctx.strokeStyle = secondary;
+      ctx.setLineDash([5, 4]);
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      for (let x = 35; x <= w - 15; x += 5) {
+        const tau = ((x - 35) / (w - 50)) * 10 + 0.1;
+        const r = svenssonRate(tau, curveParams) + (shockBp / 100);
+        const y = h - 22 - ((r - 5) / 15) * (h - 35);
+        if (x === 35) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    function resetEngine1() {
+      document.getElementById("sl_e1_b0").value = 11.8;
+      document.getElementById("sl_e1_b1").value = -1.6;
+      document.getElementById("sl_e1_b2").value = 2.4;
+      document.getElementById("sl_e1_shock").value = 150;
+      runEngine1();
+    }
+
+    // ENGINE 2: TAYLOR RULE & SELIC TRAJECTORY
+    function runEngine2() {
+      const pi = parseFloat(document.getElementById("sl_e2_pi").value);
+      const gap = parseFloat(document.getElementById("sl_e2_gap").value);
+      const rstar = parseFloat(document.getElementById("sl_e2_rstar").value);
+      const rho = parseFloat(document.getElementById("sl_e2_rho").value);
+      const piTarget = 3.0;
+
+      document.getElementById("val_e2_pi").innerText = `${pi.toFixed(1)}%`;
+      document.getElementById("val_e2_gap").innerText = `${gap >= 0 ? '+' : ''}${gap.toFixed(1)}%`;
+      document.getElementById("val_e2_rstar").innerText = `${rstar.toFixed(1)}%`;
+      document.getElementById("val_e2_rho").innerText = rho.toFixed(2);
+
+      const taylorUnrestricted = rstar + pi + 1.5 * (pi - piTarget) + 0.5 * gap;
+      const realRate = taylorUnrestricted - pi;
+      const stanceBp = Math.round((realRate - rstar) * 100);
+
+      document.getElementById("out_e2_selic").innerText = `${taylorUnrestricted.toFixed(2)}% a.a.`;
+      document.getElementById("out_e2_real").innerText = `${realRate.toFixed(2)}% a.a.`;
+      document.getElementById("out_e2_stance").innerText = `${stanceBp >= 0 ? '+' : ''}${stanceBp} bps`;
+
+      const canvas = document.getElementById("labTaylorCanvas");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      const w = canvas.width, h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      const style = getComputedStyle(document.documentElement);
+      const primary = style.getPropertyValue("--brand-primary").trim();
+      const okColor = style.getPropertyValue("--status-ok").trim();
+
+      let iCurr = 10.75;
+      let piCurr = pi;
+      ctx.strokeStyle = primary;
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+
+      const steps = 12;
+      for (let q = 0; q <= steps; q++) {
+        const x = 35 + (q / steps) * (w - 55);
+        const iTarget = rstar + piCurr + 1.5 * (piCurr - piTarget) + 0.5 * gap;
+        iCurr = rho * iCurr + (1 - rho) * iTarget;
+        piCurr = piTarget + (piCurr - piTarget) * 0.82;
+        const y = h - 22 - ((iCurr - 4) / 14) * (h - 35);
+        if (q === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+
+      // Plot Neutral nominal line
+      const yNeutral = h - 22 - (((rstar + piTarget) - 4) / 14) * (h - 35);
+      ctx.strokeStyle = okColor;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath(); ctx.moveTo(35, yNeutral); ctx.lineTo(w - 20, yNeutral); ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    // ENGINE 3: DORNBUSCH FX OVERSHOOTING
+    function runEngine3() {
+      const diff = parseFloat(document.getElementById("sl_e3_diff").value);
+      const cds = parseFloat(document.getElementById("sl_e3_cds").value);
+      const theta = parseFloat(document.getElementById("sl_e3_theta").value);
+
+      document.getElementById("val_e3_diff").innerText = `+${diff.toFixed(1)}%`;
+      document.getElementById("val_e3_cds").innerText = `${cds} bp`;
+      document.getElementById("val_e3_theta").innerText = theta.toFixed(2);
+
+      const eBar = 4.95 + (cds / 500) * 0.85;
+      const overshoot = eBar + (0.65 / theta) * (cds / 220) - (diff * 0.04);
+      const netCarry = diff - (cds / 100);
+
+      document.getElementById("out_e3_peak").innerText = `R$ ${overshoot.toFixed(2)} / USD`;
+      document.getElementById("out_e3_eq").innerText = `R$ ${eBar.toFixed(2)} / USD`;
+      document.getElementById("out_e3_carry").innerText = `${netCarry >= 0 ? '+' : ''}${netCarry.toFixed(2)}%`;
+
+      const canvas = document.getElementById("labDornbuschCanvas");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      const w = canvas.width, h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      const style = getComputedStyle(document.documentElement);
+      const primary = style.getPropertyValue("--brand-primary").trim();
+      const secondary = style.getPropertyValue("--brand-secondary").trim();
+
+      ctx.strokeStyle = primary;
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      for (let t = 0; t <= 24; t++) {
+        const x = 35 + (t / 24) * (w - 55);
+        const Et = eBar + (overshoot - eBar) * Math.exp(-theta * (t / 4));
+        const y = h - 22 - ((Et - 4.5) / 2.5) * (h - 35);
+        if (t === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+
+      const yEq = h - 22 - ((eBar - 4.5) / 2.5) * (h - 35);
+      ctx.strokeStyle = secondary;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath(); ctx.moveTo(35, yEq); ctx.lineTo(w - 20, yEq); ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    // ENGINE 4: VASICEK / ITÔ STOCHASTIC MONTE CARLO
+    function runEngine4() {
+      const kappa = parseFloat(document.getElementById("sl_e4_kappa").value);
+      const theta = parseFloat(document.getElementById("sl_e4_theta").value);
+      const sigma = parseFloat(document.getElementById("sl_e4_sigma").value);
+
+      document.getElementById("val_e4_kappa").innerText = kappa.toFixed(2);
+      document.getElementById("val_e4_theta").innerText = `${theta.toFixed(1)}%`;
+      document.getElementById("val_e4_sigma").innerText = `${sigma.toFixed(1)}%`;
+
+      const r0 = 11.25;
+      const T = 5.0;
+      const steps = 50;
+      const dt = T / steps;
+
+      const expRT = theta + (r0 - theta) * Math.exp(-kappa * T);
+      const stdRT = Math.sqrt((sigma * sigma / (2 * kappa)) * (1 - Math.exp(-2 * kappa * T)));
+      const up95 = expRT + 1.96 * stdRT;
+      const zcbPrice = Math.exp(-(expRT / 100) * T);
+
+      document.getElementById("out_e4_mean").innerText = `${expRT.toFixed(2)}%`;
+      document.getElementById("out_e4_up").innerText = `${up95.toFixed(2)}%`;
+      document.getElementById("out_e4_zcb").innerText = zcbPrice.toFixed(4);
+
+      const canvas = document.getElementById("labVasicekCanvas");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      const w = canvas.width, h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      const style = getComputedStyle(document.documentElement);
+      const primary = style.getPropertyValue("--brand-primary").trim();
+      const secondary = style.getPropertyValue("--brand-secondary").trim();
+
+      // Simulate 18 Monte Carlo Paths
+      for (let p = 0; p < 18; p++) {
+        let r = r0;
+        ctx.strokeStyle = p === 0 ? primary : "rgba(130, 150, 175, 0.25)";
+        ctx.lineWidth = p === 0 ? 2.4 : 1;
+        ctx.beginPath();
+        for (let s = 0; s <= steps; s++) {
+          const x = 35 + (s / steps) * (w - 55);
+          const y = h - 22 - ((r - 4) / 14) * (h - 35);
+          if (s === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+          const dW = (Math.random() + Math.random() + Math.random() - 1.5) * 1.15 * Math.sqrt(dt);
+          r = r + kappa * (theta - r) * dt + sigma * dW;
+        }
+        ctx.stroke();
+      }
+
+      // Long term mean line
+      const yTheta = h - 22 - ((theta - 4) / 14) * (h - 35);
+      ctx.strokeStyle = secondary;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath(); ctx.moveTo(35, yTheta); ctx.lineTo(w - 20, yTheta); ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    function runAllEconomicEngines() {
+      runEngine1();
+      runEngine2();
+      runEngine3();
+      runEngine4();
+    }
+
+    /* --------------------------------------------------------------------------
+       11. 15-MINUTE TACTICAL POMODORO & HELPERS
+       -------------------------------------------------------------------------- */
+    let timerSeconds = 15 * 60;
+    let timerInterval = null;
+    let timerRunning = false;
+
+    function updateTimerUI() {
+      const m = String(Math.floor(timerSeconds / 60)).padStart(2, "0");
+      const s = String(timerSeconds % 60).padStart(2, "0");
+      document.getElementById("headerTimerDisplay").innerText = `${m}:${s}`;
+    }
+
+    function toggleAtomicTimer() {
+      const btn = document.getElementById("btnTimerToggle");
+      if (timerRunning) {
+        clearInterval(timerInterval);
+        timerRunning = false;
+        btn.innerText = "START";
+        playBeep(520, 0.04);
+      } else {
+        timerRunning = true;
+        btn.innerText = "PAUSE";
+        playBeep(940, 0.06);
+        timerInterval = setInterval(() => {
+          if (timerSeconds > 0) {
+            timerSeconds--;
+            updateTimerUI();
+          } else {
+            clearInterval(timerInterval);
+            timerRunning = false;
+            btn.innerText = "START";
+            playBeep(1400, 0.3, "triangle");
+            showToast("// 15M BLOCK COMPLETE!");
+            timerSeconds = 15 * 60;
+            updateTimerUI();
+          }
+        }, 1000);
+      }
+    }
+
+    function resetAtomicTimer() {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      timerSeconds = 15 * 60;
+      document.getElementById("btnTimerToggle").innerText = "START";
+      updateTimerUI();
+      playBeep(440, 0.04);
+    }
+
+    function startQuickSession(labelName) {
+      resetAtomicTimer();
+      document.getElementById("timerLabelActive").innerText = labelName.slice(0, 16);
+      toggleAtomicTimer();
+      showToast(`// 15M: ${labelName.slice(0, 28)}`);
+    }
+
+    function copyQuickScript(elId) {
+      const text = document.getElementById(elId).innerText.trim();
+      const temp = document.createElement("textarea");
+      temp.value = text;
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand("copy");
+      document.body.removeChild(temp);
+      playBeep(1180, 0.05);
+      showToast("// COPIED TO CLIPBOARD");
+    }
+
+    function toggleSensoryPurge(show) {
+      const modal = document.getElementById("sensoryPurgeModal");
+      if (show) {
+        modal.classList.remove("hidden");
+        playBeep(320, 0.1, "sine");
+      } else {
+        modal.classList.add("hidden");
+      }
+    }
+
+    let toastTimer = null;
+    function showToast(msg) {
+      const toast = document.getElementById("systemToast");
+      document.getElementById("systemToastText").innerText = msg;
+      toast.classList.remove("translate-y-20", "opacity-0");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add("translate-y-20", "opacity-0");
+      }, 2800);
+    }
+
+    const BOOT_LOGS = [
+      "// INITIALISING_QUANT_ALM_CORE............... [OK]",
+      "// LOADING_SVENSSON_DUCKDB_ENGINE............... [14.8M ROWS/S]",
+      "// VERIFYING_IMPA_ANPEC_AXIOMS............... [ACTIVE]",
+      "// PHONETIC_CHAMBER_ZHUYIN_ㄅㄆㄇㄈ_HANGUL_한글............... [ENGAGED]",
+      "// BLACKWALL_NEURAL_FILTER............... [ZERO_DISPERSION]"
+    ];
+    let bootIdx = 0;
+    setInterval(() => {
+      bootIdx = (bootIdx + 1) % BOOT_LOGS.length;
+      const el = document.getElementById("bootTickerText");
+      if (el) el.innerText = BOOT_LOGS[bootIdx];
+    }, 3500);
+
+    setInterval(() => {
+      const now = new Date();
+      document.getElementById("liveClock").innerText = now.toTimeString().split(" ")[0];
+    }, 1000);
+
+    window.addEventListener("keydown", e => {
+      if (e.key === "Escape") {
+        toggleSensoryPurge(false);
+        closeTaskModal();
+      }
+    });
+
+    window.onload = function() {
+      setSystemTheme(appState.theme);
+      setSystemLanguage(appState.lang);
+      switchMainTab("overview");
+      renderAllViews();
+      drawPage1YieldCurve();
+      runAllEconomicEngines();
+    };
+  </script>
+</body>
+</html>
